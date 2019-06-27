@@ -3,7 +3,8 @@ Object.prototype.dump = function() {
 };
 
 function Graph(unidirectional) {
-	function Queue() {
+  
+  function Queue() {
 		var _queue = [];
 		this.add = value =>
 			Array.isArray(value) ? _queue.unshift(...value) : _queue.unshift(value);
@@ -64,8 +65,7 @@ function Graph(unidirectional) {
 	this.breadthFirstSearch = (id, cb) => {
 		const queue = new Queue();
 		const nodeVisitor = NodeVisitor(_nodes);
-
-		const firstNode = _nodes[0];
+		const firstNode = searchNodes(id);
 		queue.add(firstNode);
 
 		while (!queue.isEmpty()) {
@@ -77,7 +77,8 @@ function Graph(unidirectional) {
 			}
 
 			node.getNeighbours().forEach(n => {
-				if (!nodeVisitor.isNodeVisited(n.id)) queue.add(n);
+        if (!nodeVisitor.isNodeVisited(n.id)) queue.add(n);
+        else console.log('not going to revisit this node' , n.id)
 			});
 		}
 	};
@@ -104,7 +105,7 @@ graph.addEdge("d", "e");
 graph.addEdge("e", "f");
 graph.addEdge("f", "e");
 
-graph.breadthFirstSearch("c", n => console.log(JSON.stringify(n, null, 2)));
+//graph.breadthFirstSearch("c", n => console.log(JSON.stringify(n, null, 2)));
+graph.dumpEdges()
 
-graph.dumpEdges();
 /******* Breadth First Search *******/
