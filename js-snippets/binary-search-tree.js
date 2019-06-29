@@ -61,6 +61,48 @@ function BinarySearchTree(rootValue) {
 		return Math.abs(height(node.left) - height(node.right)) <= 1;
 	}
 
+	const depthFirstSearch = node => {
+		if (node) {
+			console.log(node.data);
+			depthFirstSearch(node.left);
+			depthFirstSearch(node.right);
+		}
+	};
+
+	// Left -> Root -> Right
+	const inOrderSearch = node => {
+		if (node) {
+			inOrderSearch(node.left);
+			console.log(node.data);
+			inOrderSearch(node.right);
+		}
+	};
+
+	// Root -> Left -> Right
+	const preOrderSearch = node => {
+		depthFirstSearch(node);
+	};
+
+	// Left -> Right -> Root
+	const postOrderSearch = node => {
+		if (node) {
+			postOrderSearch(node.left);
+			postOrderSearch(node.right);
+			console.log(node.data);
+		}
+	};
+
+	const getAncestor = (node , value) => {
+		if (!node) return null;
+
+		if (node.data === value) return node;
+
+		if (getAncestor(node.left,value) || getAncestor(node.right,value)) {
+			 node.dump();
+			 return;
+		}
+	}
+
 	this.insert = insert;
 	this.dump = () => _root.dump();
 	this.minNode = minNode;
@@ -68,18 +110,19 @@ function BinarySearchTree(rootValue) {
 	this.binaryTree = _root;
 	this.height = height;
 	this.isTreeBalanced = isTreeBalanced;
-
+	this.depthFirstSearch = depthFirstSearch;
+	this.inOrderSearch = inOrderSearch;
+	this.postOrderSearch = postOrderSearch;
+	this.preOrderSearch = preOrderSearch;
+	this.getAncestor = getAncestor;
 	return this;
 };
 
-const tree = new BinarySearchTree(14);
-tree.insert(8);
-tree.insert(9);
-tree.insert(4);
-tree.insert(-9);
-tree.insert(29);
- tree.insert(-9);
-tree.insert(129);
+const tree = new BinarySearchTree(40);
+tree.insert(25);
+tree.insert(10);
+tree.insert(32);
+tree.insert(78);
 tree.dump();
 
 console.log(tree.minNode(tree.binaryTree));
@@ -87,4 +130,13 @@ console.log(tree.minNode(tree.binaryTree));
 console.log(tree.maxNode(tree.binaryTree));
 console.log(tree.height(tree.binaryTree));
 
-console.log(tree.isTreeBalanced(tree.binaryTree))
+console.log(tree.isTreeBalanced(tree.binaryTree));
+
+"Depth First Search / Pre-order".dump();
+tree.depthFirstSearch(tree.binaryTree);
+
+"Post order".dump();
+tree.postOrderSearch(tree.binaryTree);
+
+"Get Ancestor".dump();
+tree.getAncestor(tree.binaryTree,32);
