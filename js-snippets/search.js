@@ -21,8 +21,7 @@ function binarySearch(arr, valueToSearch, start, end) {
 	if (start > end) return false;
 	const mid = Math.floor((start + end) / 2);
 	if (arr[mid] === valueToSearch) return true;
-	if (arr[mid] > valueToSearch)
-		return binarySearch(arr, valueToSearch, start, mid - 1);
+	if (arr[mid] > valueToSearch) return binarySearch(arr, valueToSearch, start, mid - 1);
 	else return binarySearch(arr, valueToSearch, mid + 1, end);
 }
 
