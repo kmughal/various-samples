@@ -8,9 +8,7 @@ String.prototype.print = function(label = null) {
 };
 
 function linearSearch(arr, valueToSearch) {
-	for (let index in arr) {
-		if (arr[index] === valueToSearch) return index;
-	}
+	for (let index in arr) 	if (arr[index] === valueToSearch) return index;
 	return -1;
 }
 
