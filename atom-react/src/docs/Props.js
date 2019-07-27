@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Props = props => {
+const Props =( {props}) => {
+
 	return (
-		<table className="props">
+		<table border="2" className="props">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -15,9 +16,9 @@ const Props = props => {
 
 			<tbody>
 				{Object.keys(props).map(key => {
-          return ( <tr key={}>
+          return ( <tr key={key}>
+            <td>{key}</td>
             <td>{props[key].description}</td>
-            <td>{props[key].type.name}</td>
             <td>{props[key].defaultValue && props[key].defaultValue.value}</td>
             <td>{props[key].required || "x"}</td>
           </tr>)
@@ -32,3 +33,6 @@ Props.propsTypes = {
 }
 
 export default Props;
+
+
+// message: { type: { name: "string" }, required: false, description: "" }

@@ -5,7 +5,6 @@ import Props from "./Props";
 
 const ComponentPage = ({ component }) => {
 	const { name, description, props, examples } = component;
-
 	return (
 		<div className="componentpage">
 			<h2>{name}</h2>
@@ -16,7 +15,7 @@ const ComponentPage = ({ component }) => {
 						<Example
 							key={example.code}
 							example={example}
-							componentName={component}
+							componentName={name}
 						/>
 				  ))
 				: "no example"}
@@ -26,9 +25,8 @@ const ComponentPage = ({ component }) => {
 	);
 };
 
-
 ComponentPage.propTypes = {
-  component : PropTypes.object.isRequired
-}
+	component: PropTypes.object.isRequired
+};
 
 export default ComponentPage;

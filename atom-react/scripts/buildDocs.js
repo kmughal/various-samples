@@ -5,16 +5,16 @@ const { parse } = require("react-docgen");
 const chokidar = require("chokidar");
 
 const paths = {
-	examples: path.join(__dirname, "../src", "examples"),
+	examples: path.join(__dirname, "../src/docs", "examples"),
 	components: path.join(__dirname, "../src", "components"),
 	output: path.join(__dirname, "../config", "componentData.js")
 };
 
-const enableWatchMode = process.argv.slice(2) === "--watch";
+const enableWatchMode = process.argv.slice(2).includes("--watch");
 if (enableWatchMode) {
 	chokidar
-		.watch([paths.components, path.extname])
-		.on("change", (event, path) => buuild(paths));
+		.watch([paths.components, paths.examples])
+		.on("change", (event, path) => build(paths));
 } else build(paths);
 
 function build(paths) {
@@ -44,12 +44,13 @@ function getDirectories(filePath) {
 function getComponentData(paths, name) {
 	const code = readFile(path.join(paths.components, name, `${name}.js`));
 	const info = parse(code);
-
+  // console.log(JSON.stringify(info),paths.examples)
 	var result = {
 		name,
-		description: info.displayName,
+		description: info.description,
 		code,
-		examples: getExamplesData(paths.examples, name)
+		examples: getExamplesData(paths.examples, name),
+		props : info.props
 	};
 
 	return result;
@@ -60,7 +61,10 @@ function readFile(filePath) {
 }
 
 function getExamplesData(examplesPath, name) {
+	console.log("example path" ,examplesPath)
+ 
 	const examples = getExamplesFile(examplesPath, name);
+	
 	if (!Array.isArray(examples)) return [];
 	return examples.map(file => {
 		let filePath = path.join(examplesPath, name, file);
@@ -77,17 +81,17 @@ function getExamplesData(examplesPath, name) {
 function getExamplesFile(examplesPath, name) {
 	try {
 		const exampleFiles = getFiles(path.join(examplesPath, name));
-		console.log(exampleFiles, "exampleFiles");
 		return exampleFiles;
 	} catch (e) {
 		console.log(e);
-		chalk.default.red(`no examples found for ${name} , path: ${exampleFiles}`);
+		chalk.default.red(`no examples found for ${name} , path: ${examplesPath}`);
 		return [];
 	}
 }
 
 function getFiles(filePath) {
-	if (!fs.exists(filePath)) return [];
+
+//	if (!fs.exists(filePath)) return [];
 	return fs
 		.readdirSync(filePath)
 		.filter(f => fs.statSync(path.join(filePath, f)).isFile());

@@ -1,0 +1,16 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  color:black;
+}
+
+.clear {
+  clear:both;
+}
+
+td {
+  border-top: solid 1px #fff;
+}
+
+th {
+  text-align: left
+}
