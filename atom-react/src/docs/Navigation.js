@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 
 const Navigation = ({ components }) => {
 	return (
-		<ul className="navigation">
+		<div className="navigation">
 			{components.map(name => (
-				<li key={name}>
+				<div className="navigation-item" key={name}>
 					<a href={`#${name}`}>{name}</a>
-				</li>
+				</div>
 			))}
-		</ul>
+		</div>
 	);
 };
 

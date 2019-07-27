@@ -1,16 +1,43 @@
 body {
-  font-family: 'Courier New', Courier, monospace;
-  color:black;
+	font-family: "Courier New", Courier, monospace;
+	color: black;
 }
 
 .clear {
-  clear:both;
+	clear: both;
 }
 
 td {
-  border-top: solid 1px #fff;
+	border-top: solid 1px #fff;
 }
 
 th {
-  text-align: left
+	text-align: left;
+}
+
+
+.componentpage {
+	border: 1px solid lightblue;
+	padding: 10px;
+	-webkit-flex: 5;
+	flex: 5;
+}
+
+.flex-container {
+  display: -webkit-flex;
+  display: flex;
+  height: 100%;
+}
+
+.navigation {
+	flex: 1;
+}
+
+.navigation div {
+	padding: 20px 20px;
+	background:#ccc
+}
+
+.navigation div:hover {
+	background: #ddd
 }
