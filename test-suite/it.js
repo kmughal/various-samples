@@ -1,4 +1,4 @@
-require('./print-helpers')
+require("./print-helpers");
 
 const it = (title, func) => {
 	let result;
@@ -15,7 +15,5 @@ const it = (title, func) => {
 	console.timeEnd(`Running <<<${title}>>>`);
 	return result;
 };
-
-
 
 exports.it = it;

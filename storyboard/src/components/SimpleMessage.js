@@ -1,4 +1,3 @@
-import React from 'react';
+import React from "react";
 
-export const SimpleMessage = props => (<h1>{props.message}</h1>)
-
+export const SimpleMessage = props => <h1>{props.message}</h1>;

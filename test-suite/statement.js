@@ -1,4 +1,4 @@
-require('./print-helpers');
+require("./print-helpers");
 
 const statement = {
 	isTrue(input) {
@@ -62,5 +62,4 @@ const statement = {
 	}
 };
 
-
-exports.statement = statement
+exports.statement = statement;

@@ -1,5 +1,4 @@
-require('./print-helpers')
-
+require("./print-helpers");
 
 const describe = (describeName, func) => {
 	describeName.print();

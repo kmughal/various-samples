@@ -20,9 +20,11 @@ TestSuite([
 		})
 ]).stats.print();
 
-
-
-const chainAsync = fns => { let curr = 0; const next = () => fns[curr++](next); next(); };
+const chainAsync = fns => {
+	let curr = 0;
+	const next = () => fns[curr++](next);
+	next();
+};
 
 function chainAsnc(fns) {
 	let curr = 0;
@@ -33,9 +35,13 @@ function chainAsnc(fns) {
 	next();
 }
 
-chainAsync([ n => {console.log(1);n()},
-	n => {console.log(2);n()}
-])
-
-
-
+chainAsync([
+	n => {
+		console.log(1);
+		n();
+	},
+	n => {
+		console.log(2);
+		n();
+	}
+]);

@@ -21,5 +21,4 @@ const TestSuite = tests => {
 	};
 };
 
-
-exports.TestSuite = TestSuite
+exports.TestSuite = TestSuite;
