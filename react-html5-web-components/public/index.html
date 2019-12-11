@@ -5,8 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Document Sample</title>
   <style>
+    .hide-element {
+      display: none;
+    }
+
     .holster {
       display: flex;
       align-items: center;
@@ -56,7 +60,7 @@
   </style>
 </head>
 
-<body>
+<body id=html>
   <div class="hoister">
     <div class="container x proximity-scroll-snapping" dir="rtl">
       <div>X Prox. RTL</div>
@@ -67,6 +71,74 @@
     </div>
   </div>
   <main id="app"></main>
+  <div>
+    <h1>camera Example</h1>
+    <p>By clicking on </p> button you will be prompted to authorize Camera permission. Once approved you will see the
+    camera output!
+    <button id=start-camera-button>Start Camera</button>
+    <video class=hide-element id=video-output width=300 height=400 controls></video>
+  </div>
+  <div id="demo-speech-test">
+    <div>
+      <label>To</label>
+      <input type=text id=to>
+      <button class=btn-start-speech data-result=to>Speech</button>
+    </div>
+    <div>
+      <label>To</label>
+      <input type=text id=from>
+      <button class=btn-start-speech data-result=from>Speech</button>
+    </div>
+    <div id=station-name>
+    </div>
+    <script>
+
+      function startCamera() {
+        const startCameraButton = document.getElementById("start-camera-button")
+        startCameraButton.addEventListener("click", startCameraHandler)
+        const videoOutput = document.getElementById("video-output")
+        async function startCameraHandler(_) {
+          videoOutput.srcObject = await navigator.mediaDevices.getUserMedia({ video: true });
+          videoOutput.classList.toggle("hide-element")
+        }
+      }
+
+      startCamera()
+
+
+      function bootstrapSpeech() {
+
+        const stations = ["Liverpool Street", "Ilford", "Bank"]
+        const grammar = `#JSGF V1.0; stations; public <stations> =${stations.join(" | ")};`
+        const recognition = new webkitSpeechRecognition()
+        const speechList = new webkitSpeechGrammarList()
+        speechList.addFromString(grammar, 1)
+
+        recognition.grammar = speechList
+        recognition.lang = 'en-US'
+        recognition.interimResults = false
+        recognition.maxAlternatives = 1
+
+        const startSpeechButtons = document.querySelectorAll(".btn-start-speech")
+        startSpeechButtons.forEach(btn => btn.addEventListener("click", speechStartHandler))
+
+        let result = null
+        function speechStartHandler(event) {
+          result = document.getElementById(`${event.target.getAttribute("data-result")}`)
+          alert("Starting new session for speech")
+          result.value = ("waiting....")
+          recognition.start()
+        }
+
+        recognition.onresult = event => {
+          const match = event.results[0][0].transcript
+          result.value = match
+        };
+      }
+
+      bootstrapSpeech()
+
+    </script>
 </body>
 
 </html>
