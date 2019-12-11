@@ -98,7 +98,7 @@
         startCameraButton.addEventListener("click", startCameraHandler)
         const videoOutput = document.getElementById("video-output")
         async function startCameraHandler(_) {
-          videoOutput.srcObject = await navigator.mediaDevices.getUserMedia({ video: true });
+          videoOutput.srcObject = await navigator.mediaDevices.getUserMedia({ video: true })
           videoOutput.classList.toggle("hide-element")
         }
       }
