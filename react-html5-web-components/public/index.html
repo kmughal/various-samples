@@ -6,7 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document Sample</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
+    label {
+      display: inline-block;
+      width:100px;
+    }
+    input[type="text"] {
+      width: 300px;
+      height: 30px;
+      border-radius: 10px 10px;
+      border:1px solid #ac9d9d;
+      padding:10px 10px;
+      margin:10px 10px;
+    }
     .hide-element {
       display: none;
     }
@@ -83,16 +96,19 @@
     <button id=start-blue-tooth>Start bluetooth scan!</button>
   </div>
   <div id="demo-speech-test">
+    <h1>Speech Example</h1>
+    <hr/>
     <div>
       <label>To</label>
       <input type=text id=to>
-      <button class=btn-start-speech data-result=to>Speech</button>
+      <button class=btn-start-speech data-result=to><i style="font-size:24px" class="fa">&#xf130;</i></button>
     </div>
     <div>
-      <label>To</label>
+      <label>From</label>
       <input type=text id=from>
-      <button class=btn-start-speech data-result=from>Speech</button>
+      <button class=btn-start-speech data-result=from><i style="font-size:24px" class="fa">&#xf130;</i></button>
     </div>
+
     <div id=station-name>
     </div>
     <script>
@@ -128,14 +144,19 @@
 
         let result = null
         function speechStartHandler(event) {
-          result = document.getElementById(`${event.target.getAttribute("data-result")}`)
+          const destId = event.target.parentElement.getAttribute("data-result") ||
+            event.target.getAttribute("data-result")
+
+          result = document.getElementById(destId)
+
           alert("Starting new session for speech")
-          result.value = ("waiting....")
+          result.value = "waiting...."
           recognition.start()
         }
 
         recognition.onresult = event => {
           const match = event.results[0][0].transcript
+          if (String(match).toLowerCase() === "search") alert("Search jp....")
           result.value = match
         };
       }
@@ -154,6 +175,8 @@
       }
 
       bluetoothExample()
+
+
 
     </script>
 </body>
