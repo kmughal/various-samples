@@ -78,6 +78,10 @@
     <button id=start-camera-button>Start Camera</button>
     <video class=hide-element id=video-output width=300 height=400 controls></video>
   </div>
+  <div>
+    <h1>Bluetooth test</h1>
+    <button id=start-blue-tooth>Start bluetooth scan!</button>
+  </div>
   <div id="demo-speech-test">
     <div>
       <label>To</label>
@@ -137,6 +141,19 @@
       }
 
       bootstrapSpeech()
+
+      function bluetoothExample() {
+
+        document.getElementById("start-blue-tooth")
+          .addEventListener("click", bluetoothHandler)
+        function bluetoothHandler() {
+          navigator.bluetooth.requestDevice({ acceptAllDevices: true })
+            .then(v => console.log(v))
+            .catch(e => console.log(e))
+        }
+      }
+
+      bluetoothExample()
 
     </script>
 </body>
