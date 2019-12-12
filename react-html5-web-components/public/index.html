@@ -10,16 +10,18 @@
   <style>
     label {
       display: inline-block;
-      width:100px;
+      width: 100px;
     }
+
     input[type="text"] {
       width: 300px;
       height: 30px;
       border-radius: 10px 10px;
-      border:1px solid #ac9d9d;
-      padding:10px 10px;
-      margin:10px 10px;
+      border: 1px solid #ac9d9d;
+      padding: 10px 10px;
+      margin: 10px 10px;
     }
+
     .hide-element {
       display: none;
     }
@@ -86,10 +88,12 @@
   <main id="app"></main>
   <div>
     <h1>camera Example</h1>
-    <p>By clicking on </p> button you will be prompted to authorize Camera permission. Once approved you will see the
-    camera output!
-    <button id=start-camera-button>Start Camera</button>
+    <p>By clicking on <button id=start-camera-button>Start Camera</button> button you will be prompted to authorize
+      Camera permission. Once approved you will see the
+      camera output!
+    </p>
     <video class=hide-element id=video-output width=300 height=400 controls></video>
+    <canvas id="video-canvas" style="left:0px;border:5px solid red" height=400 width=300></canvas>
   </div>
   <div>
     <h1>Bluetooth test</h1>
@@ -97,7 +101,7 @@
   </div>
   <div id="demo-speech-test">
     <h1>Speech Example</h1>
-    <hr/>
+    <hr />
     <div>
       <label>To</label>
       <input type=text id=to>
@@ -120,6 +124,32 @@
         async function startCameraHandler(_) {
           videoOutput.srcObject = await navigator.mediaDevices.getUserMedia({ video: true })
           videoOutput.classList.toggle("hide-element")
+          videoOutput.addEventListener("loadeddata", () => {
+            mapStreamSourceToCanvas(videoOutput)
+          }, false)
+
+        }
+
+        function mapStreamSourceToCanvas(video) {
+          const canvasEl = document.getElementById("video-canvas")
+          const context = canvasEl.getContext("2d")
+
+          context.drawImage(video, 0, 0, 300, 400)
+          findColor(context)
+          setTimeout(() => mapStreamSourceToCanvas(video), 0)
+        }
+
+        function findColor(context) {
+          let frame = context.getImageData(0, 0, 300, 400)
+          let data = frame.data.length / 4
+          for (let i = 0; i < data; i++) {
+            let r = frame.data[i * 4 + 0]
+            let g = frame.data[i * 4 + 1]
+            let b = frame.data[i * 4 + 2]
+
+            if (b <= 10 || g <= 100) frame.data[i * 4 + 3] = 0
+          }
+          context.putImageData(frame, 0, 0)
         }
       }
 
