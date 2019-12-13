@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render } from "react-dom";
-
+import SpeackUI from "./SpeakUI"
 Array.prototype.first = function() {
 	if (this.length === 0) throw new Error("out of index");
 	return this[0];
@@ -77,3 +77,8 @@ const App = () => {
 };
 
 render(<App />, document.getElementById("app"));
+
+
+
+
+render(<SpeackUI/>,document.getElementById("speak-container"))
