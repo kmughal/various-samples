@@ -14,8 +14,8 @@ const SpeackUI = () => {
   }
 
   setTimeout(() => {
-    let _v = window.speechSynthesis.getVoices();
-    if (_v.length === 0) _v = window.speechSynthesis.getVoices();
+    let _v = window.speechSynthesis.getVoices()
+    if (_v.length === 0) _v = window.speechSynthesis.getVoices()
     if (voices.length !== _v.length) {
       populateVoiceList();
     }
