@@ -9,8 +9,41 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+  <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
 
   <style>
+    body {
+      font-family: 'Shadows Into Light', cursive;
+    }
+
+    .process-speech {
+      background-color: #fff;
+      -webkit-animation: random 5s infinite;
+      animation: random 5s infinite;
+    }
+
+    @keyframes random {
+      15% {
+        background-color: red;
+      }
+
+      30% {
+        background-color: yellow;
+      }
+
+      45% {
+        background-color: green;
+      }
+
+      60% {
+        background-color: blue;
+      }
+
+      75% {
+        background-color: white;
+      }
+    }
+
     label {
       display: inline-block;
       width: 100px;
@@ -78,9 +111,6 @@
   </style>
 
 
-
-
-
   <script>
     // Simple speak
     function speak(message) {
@@ -103,10 +133,6 @@
       }
     }
   </script>
-
-  
-
-
 
 
   <script>
@@ -3475,6 +3501,7 @@
     <h1>Speak Example</h1>
     <hr />
     <div id=speak-container></div>
+
     <script>
       // Bluetooth
       function bluetoothExample() {
@@ -3495,194 +3522,214 @@
     </script>
 
 
-<script>
-  // Simple Camera example
+    <script>
+      // Simple Camera example
 
-  function startCamera() {
-    const startCameraButton = document.getElementById("start-camera-button");
-    startCameraButton.addEventListener("click", startCameraHandler);
-    const videoOutput = document.getElementById("video-output");
-    async function startCameraHandler(_) {
-      videoOutput.srcObject = await navigator.mediaDevices.getUserMedia({
-        video: true
-      });
-      videoOutput.classList.toggle("hide-element");
-      videoOutput.addEventListener(
-        "loadeddata",
-        () => {
-          mapStreamSourceToCanvas(videoOutput);
-        },
-        false
-      );
-    }
+      function startCamera() {
+        const startCameraButton = document.getElementById("start-camera-button");
+        startCameraButton.addEventListener("click", startCameraHandler);
+        const videoOutput = document.getElementById("video-output");
+        async function startCameraHandler(_) {
+          videoOutput.srcObject = await navigator.mediaDevices.getUserMedia({
+            video: true
+          });
+          videoOutput.classList.toggle("hide-element");
+          videoOutput.addEventListener(
+            "loadeddata",
+            () => {
+              mapStreamSourceToCanvas(videoOutput);
+            },
+            false
+          );
+        }
 
-    function mapStreamSourceToCanvas(video) {
-      const canvasEl = document.getElementById("video-canvas");
-      const context = canvasEl.getContext("2d");
+        function mapStreamSourceToCanvas(video) {
+          const canvasEl = document.getElementById("video-canvas");
+          const context = canvasEl.getContext("2d");
 
-      context.drawImage(video, 0, 0, 300, 400);
-      findColor(context);
-      setTimeout(() => mapStreamSourceToCanvas(video), 0);
-    }
+          context.drawImage(video, 0, 0, 300, 400);
+          findColor(context);
+          setTimeout(() => mapStreamSourceToCanvas(video), 0);
+        }
 
-    function findColor(context) {
-      let frame = context.getImageData(0, 0, 300, 400);
-      let data = frame.data.length / 4;
-      for (let i = 0; i < data; i++) {
-        let r = frame.data[i * 4 + 0];
-        let g = frame.data[i * 4 + 1];
-        let b = frame.data[i * 4 + 2];
+        function findColor(context) {
+          let frame = context.getImageData(0, 0, 300, 400);
+          let data = frame.data.length / 4;
+          for (let i = 0; i < data; i++) {
+            let r = frame.data[i * 4 + 0];
+            let g = frame.data[i * 4 + 1];
+            let b = frame.data[i * 4 + 2];
 
-        if (b <= 10 || g <= 100) frame.data[i * 4 + 3] = 0;
+            if (b <= 10 || g <= 100) frame.data[i * 4 + 3] = 0;
+          }
+          context.putImageData(frame, 0, 0);
+        }
       }
-      context.putImageData(frame, 0, 0);
-    }
-  }
 
-  startCamera();
+      startCamera();
 
-</script>
+    </script>
 
 
-<script>
-  // Line Status
-  function getLineStatus() {
-    fetchLineStatus()
-      .then(l => {
-        if (allLinesHaveGoodStatus(l)) return "All lines have good service";
-        else return createAMessageForBadLines(l);
+    <script>
+      // Line Status
+      function getLineStatus(filterLine) {
+        fetchLineStatus()
+          .then(l => {
+            l = filterLine ? l.filter(i => i.id === filterLine || i.modeName === filterLine) : l;
+            if (allLinesHaveGoodStatus(l)) return (filterLine ? `${l[0].name} has good service` : "All lines have good service")
+            else return createAMessageForBadLines(l);
 
-        function createAMessageForBadLines(_lines) {
-          const _foundBadLines = filterBadLines(_lines);
-          return createMessagesForBadLines(_foundBadLines);
+            function createAMessageForBadLines(_lines) {
+              const _foundBadLines = filterBadLines(_lines);
+              return createMessagesForBadLines(_foundBadLines);
 
-          function createMessagesForBadLines(_badLines) {
-            let finalProduct = [];
-            for (let _badLine of _badLines) {
-              let _message = createMessageForBadLine(_badLine);
-              finalProduct = finalProduct.concat(_message);
-            }
-            return finalProduct.join(" and ");
-          }
+              function createMessagesForBadLines(_badLines) {
+                let finalProduct = [];
+                for (let _badLine of _badLines) {
+                  let _message = createMessageForBadLine(_badLine);
+                  finalProduct = finalProduct.concat(_message);
+                }
+                return finalProduct.join(" and ");
+              }
 
-          function createMessageForBadLine(_line) {
-            const finalProduct = [];
-            const _statuses = _line.lineStatuses;
-            for (let _status of _statuses) {
-              if (_status.statusSeverity === 10) continue;
-              finalProduct.push(`${_line.id} line has ${_status.statusSeverityDescription}. 
+              function createMessageForBadLine(_line) {
+                const finalProduct = [];
+                const _statuses = _line.lineStatuses;
+                for (let _status of _statuses) {
+                  if (_status.statusSeverity === 10) continue;
+                  finalProduct.push(`${_line.id} line has ${_status.statusSeverityDescription}. 
             `);
+                }
+                return finalProduct;
+              }
+
+              function filterBadLines(_lines) {
+                return _lines.filter(determineLineHasGoodStatus);
+              }
             }
-            return finalProduct;
-          }
 
-          function filterBadLines(_lines) {
-            return _lines.filter(determineLineHasGoodStatus);
-          }
+            function allLinesHaveGoodStatus(_lines) {
+              const _foundALineWithAProblem =
+                _lines.some(determineLineHasGoodStatus) === true;
+              return !_foundALineWithAProblem;
+            }
+
+            function determineLineHasGoodStatus(_line) {
+              const _lineStatuses = _line.lineStatuses;
+              return _lineStatuses.some(lineHasAProblem);
+
+              function lineHasAProblem(_ls) {
+                return _ls.statusSeverity !== 10;
+              }
+            }
+          })
+          .then(message => {
+            speak(message);
+          });
+
+        async function fetchLineStatus() {
+          const response = await fetch(
+            "https://api.tfl.gov.uk/line/mode/tube,dlr,overground,national-rail/status"
+          );
+          let json = await response.json();
+          //json = mockLineStatus()
+          console.log(json)
+          return json;
+        }
+      }
+
+    </script>
+
+    <script>
+      // Simple Speech Example
+      function bootstrapSpeech() {
+        const grammarWords = [
+          "Liverpool Street",
+          "Ilford",
+          "Bank",
+          "Line Status",
+          "Office",
+          "Home",
+          "Login",
+          "Signin",
+          "Status updates",
+          "Live Status",
+          "Jublee",
+          "Central",
+          "Dlr",
+          "Overground",
+          "Jubilee"
+        ];
+        const grammar = `#JSGF V1.0; grammar; public <grammar> =${grammarWords.join(
+          " | "
+        )};`;
+        const recognition = new webkitSpeechRecognition();
+
+        recognition.addEventListener('audiostart', function () {
+          document.body.classList.toggle("process-speech")
+        })
+
+        recognition.addEventListener('audioend', function () {
+          document.body.classList.toggle("process-speech")
+        })
+
+        const speechList = new webkitSpeechGrammarList();
+        speechList.addFromString(grammar, 1);
+
+        recognition.grammar = speechList;
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        const startSpeechButtons = document.querySelectorAll(".btn-start-speech");
+        startSpeechButtons.forEach(btn =>
+          btn.addEventListener("click", speechStartHandler)
+        );
+
+        let result = null;
+        function speechStartHandler(event) {
+          const destId =
+            event.target.parentElement.getAttribute("data-result") ||
+            event.target.getAttribute("data-result");
+
+          result = document.getElementById(destId);
+
+          //  alert("Starting new session for speech");
+          result.value = "waiting....";
+          recognition.start();
         }
 
-        function allLinesHaveGoodStatus(_lines) {
-          const _foundALineWithAProblem =
-            _lines.some(determineLineHasGoodStatus) === true;
-          return !_foundALineWithAProblem;
-        }
+        recognition.onresult = event => {
+          const match = event.results[0][0].transcript.toLowerCase();
+          console.log(match);
+          if (
+            match === "line status" ||
+            match.includes("live status") ||
+            match.includes("status updates")
+          )
+            getLineStatus();
+          //window.location.href = "https://tfl.gov.uk/tube-dlr-overground/status/"
+          else if (match.includes("office"))
+            window.location.href =
+              "https://tfl.gov.uk/plan-a-journey/results?InputFrom=Ilford+Rail+Station&FromId=1001157&InputTo=North+Greenwich&ToId=1000160";
+          else if (match.includes("home"))
+            window.location.href =
+              "https://tfl.gov.uk/plan-a-journey/results?InputFrom=North+Greenwich&FromId=1000160&InputTo=Ilford+Rail+Station&ToId=1001157";
+          else if (match.includes("signin") || match.includes("login"))
+            window.location.href =
+              "https://tfl.gov.uk/Login?ReturnUrl=%2Fplan-a-journey%2Fresults%3FInputFrom%3DNorth%2BGreenwich%26FromId%3D1000160%26InputTo%3DIlford%2BRail%2BStation%26ToId%3D1001157%26FavPanel%3Dtrue";
+          else if (match.includes("central")) getLineStatus("central")
+          else if (match.includes("dlr")) getLineStatus("dlr")
+          else if (match.includes("overground")) getLineStatus("overground")
+          else if (match.includes("jubilee")) getLineStatus("jubilee")
+          result.value = match;
+        };
+      }
 
-        function determineLineHasGoodStatus(_line) {
-          const _lineStatuses = _line.lineStatuses;
-          return _lineStatuses.some(lineHasAProblem);
+      bootstrapSpeech();
 
-          function lineHasAProblem(_ls) {
-            return _ls.statusSeverity !== 10;
-          }
-        }
-      })
-      .then(message => {
-        speak(message);
-      });
-
-    async function fetchLineStatus() {
-      const response = await fetch(
-        "https://api.tfl.gov.uk/line/mode/tube,dlr/status"
-      );
-      let json = await response.json();
-      //json = mockLineStatus()
-      return json;
-    }
-  }
-
-</script>
-
-<script>
-  // Simple Speech Example
-  function bootstrapSpeech() {
-    const stations = [
-      "Liverpool Street",
-      "Ilford",
-      "Bank",
-      "Line Status",
-      "Office",
-      "Home",
-      "Login",
-      "Signin",
-      "Status updates",
-      "Live Status"
-    ];
-    const grammar = `#JSGF V1.0; stations; public <stations> =${stations.join(
-      " | "
-    )};`;
-    const recognition = new webkitSpeechRecognition();
-    const speechList = new webkitSpeechGrammarList();
-    speechList.addFromString(grammar, 1);
-
-    recognition.grammar = speechList;
-    recognition.lang = "en-US";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    const startSpeechButtons = document.querySelectorAll(".btn-start-speech");
-    startSpeechButtons.forEach(btn =>
-      btn.addEventListener("click", speechStartHandler)
-    );
-
-    let result = null;
-    function speechStartHandler(event) {
-      const destId =
-        event.target.parentElement.getAttribute("data-result") ||
-        event.target.getAttribute("data-result");
-
-      result = document.getElementById(destId);
-
-      alert("Starting new session for speech");
-      result.value = "waiting....";
-      recognition.start();
-    }
-
-    recognition.onresult = event => {
-      const match = event.results[0][0].transcript.toLowerCase();
-      console.log(event);
-      if (
-        match === "line status" ||
-        match.includes("live status") ||
-        match.includes("status updates")
-      )
-        getLineStatus();
-      //window.location.href = "https://tfl.gov.uk/tube-dlr-overground/status/"
-      else if (match.includes("office"))
-        window.location.href =
-          "https://tfl.gov.uk/plan-a-journey/results?InputFrom=Ilford+Rail+Station&FromId=1001157&InputTo=North+Greenwich&ToId=1000160";
-      else if (match.includes("home"))
-        window.location.href =
-          "https://tfl.gov.uk/plan-a-journey/results?InputFrom=North+Greenwich&FromId=1000160&InputTo=Ilford+Rail+Station&ToId=1001157";
-      else if (match.includes("signin") || match.includes("login"))
-        window.location.href =
-          "https://tfl.gov.uk/Login?ReturnUrl=%2Fplan-a-journey%2Fresults%3FInputFrom%3DNorth%2BGreenwich%26FromId%3D1000160%26InputTo%3DIlford%2BRail%2BStation%26ToId%3D1001157%26FavPanel%3Dtrue";
-      result.value = match;
-    };
-  }
-
-  bootstrapSpeech();
-
-</script>
+    </script>
 
 
 </body>
