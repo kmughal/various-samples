@@ -1,18 +1,18 @@
 const html = `
- <div>
-  <section>
-    <label>hello</label>
-  </section>
-  <span>great test</span>
-  <p>hello again ok</p>
- </div>
+ <form>
+ <section>
+ <label>name</label>
+ <input type="text"/>
+ </section>
+ <section>
+ <label>age</label>
+ <input type="text" onClick="great_work"/>
+ </section>
+ </form>
 `
-const bigResult = []
+
 function loopUntil (h, i, pred) {
-  while (pred(h[i])) {
-    i++
-  }
-  return i
+  return pred(h[i], i, h) ? loopUntil(h, ++i, pred) : i
 }
 
 function next (ch, i) {
@@ -20,13 +20,11 @@ function next (ch, i) {
 }
 
 function extractProps (arr) {
-  const splitter = v => v.split('=')
-  const ret = {}
-  arr.map(v => {
-    const parts = splitter(v)
-    ret[parts[0]] = parts[1]
-  })
-  return ret
+  return arr.reduce((p, c) => {
+    const parts = c.split('=')
+    p[parts[0]] = parts[1]
+    return p
+  }, {})
 }
 
 const START_TAG = '<'
@@ -34,21 +32,22 @@ const END_TAG = '>'
 const FRONT_SLASH = '/'
 
 function getTagAndProps (ch, i, html) {
-  if (ch === START_TAG && next(html, i) !== FRONT_SLASH) {
-    let newIndex = loopUntil(html, i, ch => ch !== END_TAG)
+  const startOfTag = ch === START_TAG && next(html, i) !== FRONT_SLASH
+  if (!startOfTag) return [i, void 0]
 
-    let tagName = String(html).substring(i + 1, newIndex)
+  let newIndex = loopUntil(html, i, ch => ch !== END_TAG)
 
-    i = newIndex
-    let parts = tagName.split(' ')
-    const j = {}
+  let tagName = String(html).substring(i + 1, newIndex)
 
-    j.tag = parts[0]
-    j.props = extractProps(parts.splice(1))
+  i = newIndex
 
-    return [newIndex, j]
-  }
-  return [i, void 0]
+  let parts = tagName.split(' ')
+
+  const j = {}
+  j.tag = parts[0]
+  j.props = extractProps(parts.splice(1))
+
+  return [newIndex, j]
 }
 
 function extractTheBody (html, i, node) {
