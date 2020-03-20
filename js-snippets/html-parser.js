@@ -10,7 +10,6 @@ const html = `
 const bigResult = []
 function loopUntil (h, i, pred) {
   while (pred(h[i])) {
-    //console.log('i : ', i, ' value : ', h[i])
     i++
   }
   return i
@@ -36,27 +35,17 @@ const FRONT_SLASH = '/'
 
 function getTagAndProps (ch, i, html) {
   if (ch === START_TAG && next(html, i) !== FRONT_SLASH) {
-    //console.log('i:', i, 'html:', html[i])
     let newIndex = loopUntil(html, i, ch => ch !== END_TAG)
-    // console.log(
-    //   'i:',
-    //   i,
-    //   'html:',
-    //   html[i],
-    //   'newiNDEX:',
-    //   newIndex,
-    //   'html:',
-    //   html[newIndex]
-    // )
+
     let tagName = String(html).substring(i + 1, newIndex)
-    //console.log(tagName, 'tagn ')
+
     i = newIndex
     let parts = tagName.split(' ')
     const j = {}
-    //console.log(parts, tagName)
+
     j.tag = parts[0]
     j.props = extractProps(parts.splice(1))
-    // console.log(tagName)
+
     return [newIndex, j]
   }
   return [i, void 0]
@@ -75,8 +64,7 @@ function extractTheBody (html, i, node) {
 
   const parts = html.substring(i, k)
   const d = parser(parts)
-  // console.log(d)
-  //bigResult.push({ parent: tag, children: d })
+
   node.children = d
   return [k, parts]
 }
