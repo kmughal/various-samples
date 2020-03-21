@@ -101,14 +101,12 @@ readline.question(`Enter a web address to pull down html :`, url => {
     res.on('data', chunk => data.push(chunk))
     res.on('end', function () {
       const fullHtml = Buffer.concat(data).toString('utf-8')
-
       const result = parser(fullHtml)
-
+      require('fs').writeFileSync("output.html",fullHtml)
       const json = JSON.stringify({
-        input: fullHtml,
+        //input: fullHtml,
         result
       })
-
       require('fs').writeFileSync('output.json', json)
     })
   })
