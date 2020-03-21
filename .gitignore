@@ -3,3 +3,4 @@ package-lock.json
 /lib
 /docs
 output.json
+output.html
