@@ -1,16 +1,3 @@
-const html = `
- <form>
- <section>
- <label>name</label>
- <input type="text"/>
- </section>
- <section>
- <label>age</label>
- <input type="text" onClick="great_work"/>
- </section>
- </form>
-`
-
 function loopUntil (h, i, pred) {
   return pred(h[i], i, h) ? loopUntil(h, ++i, pred) : i
 }
@@ -19,12 +6,25 @@ function next (ch, i) {
   return ch[i + 1]
 }
 
-function extractProps (arr) {
-  return arr.reduce((p, c) => {
-    const parts = c.split('=')
-    p[parts[0]] = parts[1]
-    return p
-  }, {})
+function extractProps (propsString) {
+  propsString = String(propsString)
+  const p = /=/g
+  const splitLocs = []
+  while ((m = p.exec(propsString))) {
+    let end = m.index
+    let start = propsString.lastIndexOf(' ', end)
+    start = start === -1 ? 0 : start
+    splitLocs.push({ start, end })
+  }
+
+  const props = []
+  splitLocs.forEach((v, i) => {
+    let propName = propsString.substring(v.start, v.end)
+    let last = splitLocs[i + 1] ? splitLocs[i + 1].start : propsString.length
+    let propValue = String(propsString).substring(v.end + 2, last - 1)
+    props.push({ [propName.replace(' ', '')]: propValue })
+  })
+  return props
 }
 
 const START_TAG = '<'
@@ -45,7 +45,7 @@ function getTagAndProps (ch, i, html) {
 
   const j = {}
   j.tag = parts[0]
-  j.props = extractProps(parts.splice(1))
+  j.props = extractProps(tagName.replace(j.tag, ''))
 
   return [newIndex, j]
 }
@@ -89,11 +89,28 @@ function parser (html) {
   return r
 }
 
-const result = parser(html)
-console.log(JSON.stringify(result, null, 2))
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
 
-const json = {
-  input: html,
-  result
-}
-require('fs').writeFileSync('output.json', JSON.stringify(json, null, 2))
+readline.question(`Enter a web address to pull down html :`, url => {
+  console.log('You entered : ', url)
+  require('https').get(url, res => {
+    var data = []
+    res.on('data', chunk => data.push(chunk))
+    res.on('end', function () {
+      const fullHtml = Buffer.concat(data).toString('utf-8')
+
+      const result = parser(fullHtml)
+
+      const json = JSON.stringify({
+        input: fullHtml,
+        result
+      })
+
+      require('fs').writeFileSync('output.json', json)
+    })
+  })
+  readline.close()
+})
