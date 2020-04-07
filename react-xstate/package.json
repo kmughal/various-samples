@@ -1,0 +1,27 @@
+{
+  "name": "react-xstate-sample",
+  "version": "1.0.0",
+  "description": "a sample code which uses react, nextjs and xstate",
+  "main": "index.js",
+  "author": "Khurram Mughal",
+  "license": "MIT",
+  "dependencies": {
+    "@tailwindcss/custom-forms": "^0.2.1",
+    "@xstate/react": "^0.8.1",
+    "autoprefixer": "^9.7.6",
+    "next": "^9.3.4",
+    "node-fetch": "^2.6.0",
+    "postcss-import": "^12.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "tailwindcss": "^1.2.0",
+    "xstate": "^4.8.0"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build && next export",
+    "start": "next start",
+    "build:css": "npx tailwindcss build src/css/style.css -o ../../dist/css/style.css"
+  }
+}

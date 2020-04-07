@@ -4,3 +4,7 @@ package-lock.json
 /docs
 output.json
 output.html
+.next
+dist
+out
+*.log
