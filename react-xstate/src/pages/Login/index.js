@@ -8,28 +8,6 @@ import SuccessMessage from "../../components/SuccessMessage"
 import { useMachine } from "@xstate/react"
 import { Machine } from "xstate"
 
-
-const fetchMachine = Machine({
-    id: "fetch",
-    initial: "idle",
-    states: {
-        idle: {
-            on: { FETCH: "notidle" }
-        },
-        notidle: {
-            on: { FETCH: "loading" }
-        },
-        loading: {
-            on: { FETCH: "loaded" }
-        },
-        loaded: {
-            on: { FETCH: "idle" }
-        }
-
-    }
-})
-
-
 const ApiClientMachine = Machine({
     id: "http-client",
     initial: "idle",
@@ -69,6 +47,11 @@ export default function Login() {
     const [state, send] = useMachine(ApiClientMachine, {
         actions: {
             load: () => {
+
+                if (username.current.value === "" || password.current.value === "") {
+                    return setError({ message: "username / password is empty" })
+                }
+
                 onFetch(username.current.value, password.current.value)
                     .then(response => {
                         return new Promise((resolve, reject) => {
