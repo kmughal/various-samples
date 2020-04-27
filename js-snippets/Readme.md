@@ -10,7 +10,7 @@
 - Don't use the innerHTML property instead of that use textContent
 - Use the integrity property for third party libraries. for reference https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
 
-``html
+```
 <script src="https://example.com/example-framework.js"
         integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/ux..."
         crossorigin="anonymous"></script>
