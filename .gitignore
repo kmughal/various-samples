@@ -8,3 +8,5 @@ output.html
 dist
 out
 *.log
+.cache
+dist
