@@ -28,6 +28,8 @@
     "preserver": "parcel build index.html",
     "dev:server": "node -r esm server",
     "build:server": "parcel build server.js --target node",
-    "server": "yarn build:server && node dist/server.js"
+    "build:server1": "parcel build server1.js --target node",
+  
+    "server" : "yarn build:server1 && node dist/server1.js"
   }
 }
