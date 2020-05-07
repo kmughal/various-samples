@@ -1,6 +1,9 @@
 const fastify = require("fastify")({ logger: true })
 const { ApolloServer, gql } = require("apollo-server-fastify")
 
+fastify.register(require('fastify-cors'), { 
+  // put your options here
+})
 fastify.register(require("./mongodb").initMongodb)
 fastify.register(require("./routes").basicRoutes)
 

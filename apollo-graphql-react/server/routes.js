@@ -8,6 +8,12 @@ const basicRoutes = async (fastify, option) => {
     return result
   }
 
+  fastify.get("/reset", async (_, __) => {
+    const collection = await getDefaultCollection()
+    await collection.remove({})
+    return { done: true }
+  })
+
   fastify.get("/add", async (request, response) => {
     const params = request.query
     const collection = await getDefaultCollection()
