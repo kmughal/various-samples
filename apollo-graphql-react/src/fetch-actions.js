@@ -9,4 +9,8 @@ const FETCH_PEOPLE_QUERY = gql`
   }
 `
 
+const ADD_PERSON_QUERY = gql '
+
+'
+
 export { FETCH_PEOPLE_QUERY }

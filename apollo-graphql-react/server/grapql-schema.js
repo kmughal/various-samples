@@ -1,26 +1,35 @@
 const { gql } = require("apollo-server")
 
 const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
   type Person {
     name: String
     age: Int
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
     people: [Person]
   }
-`
 
+  type Mutation {
+    createPerson(name: String, age: Int): Person
+  }
+`
 
 exports.typeDefs = typeDefs
 const { getDefaultCollection } = require("./mongodb")
-const resolvers = {
+
+const mutation = {
+  Mutation: {
+    createPerson: async (root, args) => {
+      const { name, age } = args
+      const collection = await getDefaultCollection()
+      const record = { name, age }
+      collection.insertOne(record)
+      return record
+    },
+  },
+}
+const query = {
   Query: {
     people: async () => {
       const collection = await getDefaultCollection()
@@ -37,9 +46,7 @@ const resolvers = {
     },
   },
 }
-// const resolvers = {
-//   Query: {
-//     books: () => books,
-//   },
-// }
+
+const resolvers = Object.assign({}, mutation, query)
+console.log(resolvers)
 exports.resolvers = resolvers
