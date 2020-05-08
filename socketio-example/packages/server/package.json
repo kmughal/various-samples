@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "khurram mughal",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "2.14.0",
+    "fastify-cors": "^3.0.3",
+    "fastify-static": "^2.7.0",
+    "nodemon": "2.0.3",
+    "socket.io": "^2.3.0"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js"
+  }
+}
