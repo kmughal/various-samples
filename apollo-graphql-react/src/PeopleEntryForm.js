@@ -1,25 +1,36 @@
 import React from "react"
 import { useMutation } from "@apollo/react-hooks"
-import { ADD_PERSON_MUTATION } from "./fetch-actions"
+import { ADD_PERSON_MUTATION,ADD_NEW_RECORD_TO_LOCAL_STORE } from "./fetch-actions"
 
-const PersonEntryForm = () => {
+const PersonEntryForm = ({addPersonCompleted}) => {
   const name = React.useRef(null)
   const age = React.useRef(null)
   const [error, setError] = React.useState(false)
   const [AddPersonMutation] = useMutation(ADD_PERSON_MUTATION)
+  const [AddPersonToLocalStoreMutation] = useMutation(ADD_NEW_RECORD_TO_LOCAL_STORE)
   return (
     <div className="w-full max-w-xs left-align">
       {error && <p>Error has occured {error}</p>}
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={(e) => {
-          const result = AddPersonMutation({
+        onSubmit={ (e) => {
+          const result =  AddPersonMutation({
             variables: {
               name: name.current.value,
               age: parseInt(age.current.value, 10),
             },
           })
-          console.log(result)
+        
+          e.preventDefault()
+          result.then(r => {
+            AddPersonToLocalStoreMutation({
+              variables: {
+                name: name.current.value,
+                age: parseInt(age.current.value, 10),
+              },
+            })
+            addPersonCompleted()
+          })
         }}
       >
         <div className="mb-4">

@@ -1,7 +1,8 @@
 import React from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { FETCH_PEOPLE_QUERY } from "./fetch-actions"
-
+import PersonEntryForm from "./PeopleEntryForm"
+import {FIND_ALL_RECORDS_FROM_LOCAL_STORE} from "./fetch-actions"
 const PleaseWait = () => <p>Loading....</p>
 
 const PeopleRecords = ({ people }) => {
@@ -32,11 +33,18 @@ const PeopleRecords = ({ people }) => {
 const FetchFailed = () => <p className="bg-red-600 bg-opacity-75 text-6xl text-color-white">Fetch failed</p>
 
 const People = () => {
-  const { loading, error, data } = useQuery(FETCH_PEOPLE_QUERY)
-
+  const { loading, error, data,setData } = useQuery(FIND_ALL_RECORDS_FROM_LOCAL_STORE , { pollInterval: 500})
+ 
+  const addPersonCompleted = () => {
+    console.log("added")
+  }
   if (error) return <FetchFailed />
   if (loading) return <PleaseWait />
-  return <PeopleRecords people={data.people} />
+  return ( <>
+    <PersonEntryForm addPersonCompleted={addPersonCompleted}/>
+    <PeopleRecords people={data.people} />
+    </>)
+ 
 }
 
 export default People
