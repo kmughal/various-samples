@@ -1,4 +1,5 @@
-const socket = io.connect("http://localhost:3000")
+const address = location.href
+const socket = io.connect(address)
 const cameraButton = document.getElementById("button-switch-on-camera")
 let stream = null
 cameraButton.addEventListener("click", async (event) => {

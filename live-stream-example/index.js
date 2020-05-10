@@ -11,7 +11,7 @@ fastify.get("/", (req, reply) => {
   reply.sendFile("index.html", "public")
 })
 
-const port = 3000
+const port = process.env.PORT || 80
 
 function setSocket() {
   const server = io.listen(port)
