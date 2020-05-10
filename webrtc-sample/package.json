@@ -1,0 +1,24 @@
+{
+  "name": "webrtc-sample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "khurram mughal",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "concurrently" : "5.2.0"
+  },
+  "scripts": {
+    "client": "parcel index.html",
+    "server": "nodemon server.js",
+    "start": "concurrently \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "fastify": "2.14.1",
+    "fastify-cors": "^3.0.3",
+    "nodemon": "^2.0.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "socket.io": "2.3.0"
+  }
+}
