@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <h1 class="text-5xl text-red-800 align-middle p-4">WebRtc Test page</h1>
+      <hr />
+
+      <div class="flex flex-row bg-grey-lighter">
+        <div class="text-grey-darker text-center bg-grey-light px-4 py-2 m-2">
+          <p>You local View</p>
+          <video
+            id="local-video"
+            width="300"
+            height="300"
+            autoplay
+            controls
+          ></video>
+        </div>
+        <div class="text-grey-darker text-center bg-grey-light px-4 py-2 m-2">
+          <p>Remote View</p>
+          <video
+            id="remote-video"
+            width="300"
+            height="300"
+            autoplay
+            controls
+          ></video>
+        </div>
+      </div>
+
+      <div class="flex">
+   
+        <button class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" id="button-make-call">
+          Make Call
+        </button>
+        <button class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" id="button-switch-on-camera">
+          Turn on the camera
+        </button>
+      </div>
+    </main>
+    <script src="live-cam.js"></script>
+  </body>
+</html>
