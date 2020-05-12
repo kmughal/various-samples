@@ -5,18 +5,19 @@ import client from "./fetch"
 
 import People from "./People"
 
-
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <div className="p4">
-        <h1 className="text-6xl text-center">People details</h1>
-        <hr />
-        <br/>
-        
-        <br />
-        <People />
-      </div>
+      <React.StrictMode>
+        <div className="p4">
+          <h1 className="text-6xl text-center">People details</h1>
+          <hr />
+          <br />
+
+          <br />
+          <People />
+        </div>
+      </React.StrictMode>
     </ApolloProvider>
   )
 }
