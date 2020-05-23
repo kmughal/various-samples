@@ -1,0 +1,10 @@
+{
+  "name": "js-dom-sample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "khurram mughal",
+  "license": "MIT",
+  "dependencies": {
+    "jsdom": "^16.2.2"
+  }
+}
