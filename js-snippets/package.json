@@ -10,8 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodegit": "0.26.5",
+    "elasticlunr": "^0.9.5",
     "figlet": "1.3.0",
-    "highland": "2.13.5"
+    "highland": "2.13.5",
+    "nodegit": "0.26.5"
   }
 }
