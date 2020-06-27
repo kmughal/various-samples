@@ -24,6 +24,7 @@ const Title: React.FC<{ titleProps: TitleProps }> = (props) => {
     name: props.titleProps.name,
     label: props.titleProps.label,
     options: titles,
+    validationError: "Select title !"
   }
 
   return (

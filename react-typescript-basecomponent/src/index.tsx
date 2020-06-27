@@ -58,19 +58,23 @@ const titleProps: TitleProps = { label: "Title:", id: "title", name: "title" }
 
 const App = () => {
   return (
-    <Form fromProps={fromProps}>
-      <Title titleProps={titleProps} />
-      <NullValidator nullValidatorProps={nullValidatorProps}>
-        <TextBox textBoxProps={textBoxProps} />
-      </NullValidator>
-      <RangeValidator rangeValidatorProps={rangeValidatorProps}>
-        <NumberBox numberBoxProps={numberBoxProps} />
-      </RangeValidator>
-      <PostCode postCodeProps={postCodeProps} />
-      <div>
-        <button>Submit</button>
-      </div>
-    </Form>
+    <section className="container mx-auto">
+      <h1 className="text-6xl">Basic Form Example</h1>
+      <Form fromProps={fromProps}>
+        <Title titleProps={titleProps} />
+        <NullValidator nullValidatorProps={nullValidatorProps}>
+          <TextBox textBoxProps={textBoxProps} />
+        </NullValidator>
+
+        <RangeValidator rangeValidatorProps={rangeValidatorProps}>
+          <NumberBox numberBoxProps={numberBoxProps} />
+        </RangeValidator>
+        <PostCode postCodeProps={postCodeProps} />
+        <div>
+          <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+        </div>
+      </Form>
+    </section>
   )
 }
 

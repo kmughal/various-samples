@@ -12,8 +12,9 @@ const SelectBox: React.FC<{ selectBoxProps: SelectBoxProps }> = (props) => {
   )
   return (
     <div>
-      <label>{selectBoxProps.label}</label>
+      <label className="block text-gray-700 text-sm font-bold mb-2">{selectBoxProps.label}</label>
       <select
+        className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
         ref={selectBoxProps.eleRef}
         name={selectBoxProps.name}
         id={selectBoxProps.id}
@@ -21,7 +22,7 @@ const SelectBox: React.FC<{ selectBoxProps: SelectBoxProps }> = (props) => {
         {selectOptions}
       </select>
       {!selectBoxProps.valid && (
-        <p>{selectBoxProps.validationError ?? "Select an option"} </p>
+        <div role="alert" className="m-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{selectBoxProps.validationError ?? "Select an option"} </div>
       )}
       {props.children}
     </div>
