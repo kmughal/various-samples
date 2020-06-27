@@ -7,14 +7,18 @@ import {
   NullValidatorProps,
 } from "./components/Validators/NullValidator"
 
-import { TextBox, TextBoxProps } from "./components/TextBox"
-
 import {
   RangeValidator,
   RangeValidatorProps,
 } from "./components/Validators/RangeValidator"
 
+import { TextBox, TextBoxProps } from "./components/TextBox"
+
+import { PostCode, PostCodeProps } from "./components/Recepies/PostCode"
+
 import { NumberBox, NumberBoxProps } from "./components/NumberBox"
+
+import { Title, TitleProps } from "./components/Recepies/Title"
 
 const fromProps: FormProps = {
   submitHandler: () => {
@@ -43,15 +47,26 @@ const numberBoxProps: NumberBoxProps = {
   validationError: "Valid range is from 5->20",
 }
 
+const postCodeProps: PostCodeProps = {
+  name: "postcode",
+  id: "postcode",
+  validationError: "Invalid postcode",
+  label: "Post Code:",
+}
+
+const titleProps: TitleProps = { label: "Title:", id: "title", name: "title" }
+
 const App = () => {
   return (
     <Form fromProps={fromProps}>
+      <Title titleProps={titleProps} />
       <NullValidator nullValidatorProps={nullValidatorProps}>
         <TextBox textBoxProps={textBoxProps} />
       </NullValidator>
       <RangeValidator rangeValidatorProps={rangeValidatorProps}>
         <NumberBox numberBoxProps={numberBoxProps} />
       </RangeValidator>
+      <PostCode postCodeProps={postCodeProps} />
       <div>
         <button>Submit</button>
       </div>

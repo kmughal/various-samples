@@ -1,4 +1,4 @@
-import NullValidator from "./NullValidator"
+import RegexValidator from "./RegexValidator"
 import RegexValidatorProps from "./RegexValidator.Props"
 
-export { NullValidator, RegexValidatorProps }
+export { RegexValidator, RegexValidatorProps }
