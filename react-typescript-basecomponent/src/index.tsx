@@ -1,21 +1,20 @@
 import * as React from "react"
 import { render } from "react-dom"
-import Form from "./components/Form/Form"
-import FormProps from "./components/Form/Form.Props"
+import { Form, FormProps } from "./components/Form"
 
-import NullValidator from "./components/Validators/NullValidator/NullValidator"
-import NullValidatorProps from "./components/Validators/NullValidator/NullValidator.Props"
+import {
+  NullValidator,
+  NullValidatorProps,
+} from "./components/Validators/NullValidator"
 
-import TextBox from "./components/TextBox/Textbox"
-import TextBoxProps from "./components/TextBox/TextBox.Props"
+import { TextBox, TextBoxProps } from "./components/TextBox"
 
 import {
   RangeValidator,
   RangeValidatorProps,
 } from "./components/Validators/RangeValidator"
 
-import NumberBox from "./components/NumberBox/NumberBox"
-import NumberBoxProps from "./components/NumberBox/NumberBox.Props"
+import { NumberBox, NumberBoxProps } from "./components/NumberBox"
 
 const fromProps: FormProps = {
   submitHandler: () => {
@@ -24,10 +23,25 @@ const fromProps: FormProps = {
 }
 
 const nullValidatorProps: NullValidatorProps = { name: "name", pubSub: null }
-const textBoxProps: TextBoxProps = { name: "name", id: "name", label: "Name :" ,validationError: "Please provide name!"}
+const textBoxProps: TextBoxProps = {
+  name: "name",
+  id: "name",
+  label: "Name :",
+  validationError: "Please provide name!",
+}
 
-const rangeValidatorProps: RangeValidatorProps = { id: "age", name: "age", max: 20, min: 5}
-const numberBoxProps:NumberBoxProps = {id:"age" , name:"age" , label: "Age :" , validationError:"Valid range is from 5->20"}
+const rangeValidatorProps: RangeValidatorProps = {
+  id: "age",
+  name: "age",
+  max: 20,
+  min: 5,
+}
+const numberBoxProps: NumberBoxProps = {
+  id: "age",
+  name: "age",
+  label: "Age :",
+  validationError: "Valid range is from 5->20",
+}
 
 const App = () => {
   return (
@@ -36,7 +50,7 @@ const App = () => {
         <TextBox textBoxProps={textBoxProps} />
       </NullValidator>
       <RangeValidator rangeValidatorProps={rangeValidatorProps}>
-        <NumberBox numberBoxProps={numberBoxProps}/>
+        <NumberBox numberBoxProps={numberBoxProps} />
       </RangeValidator>
       <div>
         <button>Submit</button>
