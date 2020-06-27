@@ -13,6 +13,7 @@ const index = elasticlunr(function () {
   this.addField("name_first")
   this.addField("name_last")
   this.addField("address")
+  this.saveDocument(false)
 })
 
 var mem = {}
