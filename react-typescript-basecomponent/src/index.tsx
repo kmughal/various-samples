@@ -28,6 +28,7 @@ const fromProps: FormProps = {
 }
 
 const nullValidatorProps: NullValidatorProps = { name: "name" }
+
 const textBoxProps: TextBoxProps = {
   name: "name",
   id: "name",
@@ -58,18 +59,19 @@ const postCodeProps: PostCodeProps = {
 const titleProps: TitleProps = { label: "Title:", id: "title", name: "title" }
 
 const checkboxProps: CheckboxProps = {
-  id: "married",
-  name: "married",
-  value: "Married",
-  label: "Married :",
+  id: "terms",
+  name: "terms",
+  value: "terms",
+  label: "Have you read the terms and conditions :",
+  validationError: "Please select Terms and Conditions"
 }
+const nullCheckboxValidatorProps: NullValidatorProps = { name: "termsandconditions" }
 
 const App = () => {
   return (
     <section className="container mx-auto">
       <h1 className="text-6xl">Basic Form Example</h1>
       <Form fromProps={fromProps}>
-       
         <Title titleProps={titleProps} />
         <NullValidator nullValidatorProps={nullValidatorProps}>
           <TextBox textBoxProps={textBoxProps} />
@@ -79,6 +81,10 @@ const App = () => {
           <NumberBox numberBoxProps={numberBoxProps} />
         </RangeValidator>
         <PostCode postCodeProps={postCodeProps} />
+
+        <NullValidator nullValidatorProps={nullCheckboxValidatorProps}>
+          <Checkbox checkboxProps={checkboxProps} />
+        </NullValidator>
         <div>
           <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Submit

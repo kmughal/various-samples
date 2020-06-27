@@ -21,6 +21,7 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
   const [formFields, setformFields] = React.useState(null)
   const submitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
     setformFields(null)
+    debugger
     const flatListOfPubSub = flatList(pubsub)
     const validationResult = runValidation(flatListOfPubSub)
     if (validationResult) document.body.style.background = "red"
@@ -40,9 +41,7 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
      
       {React.Children.map(children, (child, index) => {
         let props = OverrideProperty(child.props, "pubSub", pubsub)
-
         OverrideProperty(props, "formValues", formValues)
-
         return React.cloneElement(child, { ...props })
       })}
        {formFields && <pre>{JSON.stringify(formFields, null, 2)}</pre>}

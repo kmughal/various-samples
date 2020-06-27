@@ -11,8 +11,12 @@ const NullValidator: React.FC<{ nullValidatorProps: NullValidatorProps }> = (
     eleRef: React.MutableRefObject<any>,
     setValid: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    setValid(eleRef.current.value.length !== 0)
-    return eleRef.current.value.length !== 0
+    let expression = eleRef.current.value.length !== 0
+    if (eleRef.current.type === "checkbox") {
+      expression = eleRef.current.checked
+    }
+    setValid(expression)
+    return expression
   }
 
   const validatorProps: BaseValidatorProps = {
@@ -21,7 +25,7 @@ const NullValidator: React.FC<{ nullValidatorProps: NullValidatorProps }> = (
     pubSub: nullValidatorProps.pubSub,
     formValues: nullValidatorProps.formValues,
   }
-
+  debugger
   return (
     <BaseValitor children={props.children} validatorProps={validatorProps} />
   )
