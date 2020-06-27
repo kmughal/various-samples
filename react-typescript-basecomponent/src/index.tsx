@@ -19,6 +19,7 @@ import { PostCode, PostCodeProps } from "./components/Recepies/PostCode"
 import { NumberBox, NumberBoxProps } from "./components/NumberBox"
 
 import { Title, TitleProps } from "./components/Recepies/Title"
+import { Checkbox, CheckboxProps } from "./components/Checkbox"
 
 const fromProps: FormProps = {
   submitHandler: () => {
@@ -56,11 +57,19 @@ const postCodeProps: PostCodeProps = {
 
 const titleProps: TitleProps = { label: "Title:", id: "title", name: "title" }
 
+const checkboxProps: CheckboxProps = {
+  id: "married",
+  name: "married",
+  value: "Married",
+  label: "Married :",
+}
+
 const App = () => {
   return (
     <section className="container mx-auto">
       <h1 className="text-6xl">Basic Form Example</h1>
       <Form fromProps={fromProps}>
+        <Checkbox checkboxProps={checkboxProps} />
         <Title titleProps={titleProps} />
         <NullValidator nullValidatorProps={nullValidatorProps}>
           <TextBox textBoxProps={textBoxProps} />
@@ -71,7 +80,9 @@ const App = () => {
         </RangeValidator>
         <PostCode postCodeProps={postCodeProps} />
         <div>
-          <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+          <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Submit
+          </button>
         </div>
       </Form>
     </section>

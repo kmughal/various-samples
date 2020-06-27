@@ -2,6 +2,7 @@ import * as React from "react"
 import FormProps from "./Form.Props"
 
 const pubsub = []
+const formFields = []
 
 const flatList = (arr: Array<any>) => {
   return arr.reduce((prev, current) => {
@@ -25,6 +26,7 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
 
     event.preventDefault()
   }
+
   const children = props.children as any
   return (
     <form onSubmit={submitHandler}>
