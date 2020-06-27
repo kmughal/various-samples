@@ -1,5 +1,6 @@
 interface NullValidatorProps {
-  pubSub: Array<any>;
+  pubSub?: Array<any>;
+  formValues?: [() => any];;
   name: string;
 }
 

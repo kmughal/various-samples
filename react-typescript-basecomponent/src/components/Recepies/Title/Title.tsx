@@ -10,6 +10,7 @@ const Title: React.FC<{ titleProps: TitleProps }> = (props) => {
   const selectBoxValidatorProps: NullValidatorProps = {
     name: props.titleProps.name,
     pubSub: props.titleProps.pubSub,
+    formValues:props.titleProps.formValues
   }
 
   const titles = new Array<SelectBoxOption>()
@@ -24,7 +25,8 @@ const Title: React.FC<{ titleProps: TitleProps }> = (props) => {
     name: props.titleProps.name,
     label: props.titleProps.label,
     options: titles,
-    validationError: "Select title !"
+    validationError: "Select title !",
+    
   }
 
   return (

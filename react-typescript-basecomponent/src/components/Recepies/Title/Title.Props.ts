@@ -3,6 +3,7 @@ interface TitleProps {
   id: string;
   label: string;
   pubSub?: Array<any>;
+  formValues?: [() => any];;
 }
 
 export default TitleProps

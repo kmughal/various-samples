@@ -11,14 +11,24 @@ const BaseValidator: React.FC<{ validatorProps: BaseValidatorProps }> = (
   const [valid, setValid] = React.useState(true)
 
   const validation = {
-    [`validate${validatorProps.name}`]: () => validatorProps.validationFn(eleRef, setValid),
+    [`validate${validatorProps.name}`]: () =>
+      validatorProps.validationFn(eleRef, setValid),
   }
 
   if (
-    !validatorProps.pubSub.some((p) => Object.keys(p)[0] === `validate${validatorProps.name}`)
-  )
+    !validatorProps.pubSub.some(
+      (p) => Object.keys(p)[0] === `validate${validatorProps.name}`
+    )
+  ) {
+    debugger
     validatorProps.pubSub.push(validation)
-    
+    validatorProps.formValues.push(() => {
+      return {
+        [validatorProps.name]: eleRef.current.value,
+      }
+    })
+  }
+
   return (
     <>
       {React.Children.map(children as any, (child, index) => {

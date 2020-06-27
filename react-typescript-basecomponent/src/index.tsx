@@ -27,7 +27,7 @@ const fromProps: FormProps = {
   },
 }
 
-const nullValidatorProps: NullValidatorProps = { name: "name", pubSub: null }
+const nullValidatorProps: NullValidatorProps = { name: "name" }
 const textBoxProps: TextBoxProps = {
   name: "name",
   id: "name",
@@ -69,7 +69,7 @@ const App = () => {
     <section className="container mx-auto">
       <h1 className="text-6xl">Basic Form Example</h1>
       <Form fromProps={fromProps}>
-        <Checkbox checkboxProps={checkboxProps} />
+       
         <Title titleProps={titleProps} />
         <NullValidator nullValidatorProps={nullValidatorProps}>
           <TextBox textBoxProps={textBoxProps} />

@@ -22,6 +22,7 @@ const RangeValidator: React.FC<{ rangeValidatorProps: RangeValidatorProps }> = (
     name: rangeValidatorProps.name,
     validationFn,
     pubSub: rangeValidatorProps.pubSub,
+    formValues: rangeValidatorProps.formValues
   }
   
   return (

@@ -19,8 +19,9 @@ const NullValidator: React.FC<{ nullValidatorProps: NullValidatorProps }> = (
     name: nullValidatorProps.name,
     validationFn,
     pubSub: nullValidatorProps.pubSub,
+    formValues: nullValidatorProps.formValues
   }
-
+  debugger
   return <BaseValitor children={props.children} validatorProps={validatorProps} />
 }
 

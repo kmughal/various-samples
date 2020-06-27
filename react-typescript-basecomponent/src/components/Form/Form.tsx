@@ -2,7 +2,7 @@ import * as React from "react"
 import FormProps from "./Form.Props"
 
 const pubsub = []
-const formFields = []
+const formValues = []
 
 const flatList = (arr: Array<any>) => {
   return arr.reduce((prev, current) => {
@@ -18,11 +18,18 @@ const runValidation = (arr: Array<any>) => {
 }
 
 const Form: React.FC<{ fromProps: FormProps }> = (props) => {
+  const [formFields, setformFields] = React.useState(null)
   const submitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
+    setformFields(null)
     const flatListOfPubSub = flatList(pubsub)
     const validationResult = runValidation(flatListOfPubSub)
     if (validationResult) document.body.style.background = "red"
-    else props.fromProps.submitHandler()
+    else {
+      const values = []
+      formValues.forEach((v) => values.push(v()))
+      setformFields(values)
+      props.fromProps.submitHandler()
+    }
 
     event.preventDefault()
   }
@@ -30,10 +37,15 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
   const children = props.children as any
   return (
     <form onSubmit={submitHandler}>
+     
       {React.Children.map(children, (child, index) => {
-        const props = OverrideProperty(child.props, "pubSub", pubsub)
+        let props = OverrideProperty(child.props, "pubSub", pubsub)
+
+        OverrideProperty(props, "formValues", formValues)
+
         return React.cloneElement(child, { ...props })
       })}
+       {formFields && <pre>{JSON.stringify(formFields, null, 2)}</pre>}
     </form>
   )
 }

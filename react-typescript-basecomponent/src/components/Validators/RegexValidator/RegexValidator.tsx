@@ -23,6 +23,7 @@ const RegexValidator: React.FC<{ regexValidatorProps: RegexValidatorProps }> = (
     name: regexValidatorProps.name,
     validationFn,
     pubSub: regexValidatorProps.pubSub,
+    formValues: regexValidatorProps.formValues
   }
 
   return (
