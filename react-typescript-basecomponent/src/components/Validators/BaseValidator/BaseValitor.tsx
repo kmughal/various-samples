@@ -20,7 +20,6 @@ const BaseValidator: React.FC<{ validatorProps: BaseValidatorProps }> = (
       (p) => Object.keys(p)[0] === `validate${validatorProps.name}`
     )
   ) {
-    debugger
     validatorProps.pubSub.push(validation)
     validatorProps.formValues.push(() => {
       return {

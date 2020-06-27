@@ -5,8 +5,8 @@ import { BaseValidatorProps, BaseValitor } from "../BaseValidator"
 const NullValidator: React.FC<{ nullValidatorProps: NullValidatorProps }> = (
   props
 ) => {
-  const nullValidatorProps = props.nullValidatorProps 
-  
+  const nullValidatorProps = props.nullValidatorProps
+
   const validationFn = (
     eleRef: React.MutableRefObject<any>,
     setValid: React.Dispatch<React.SetStateAction<boolean>>
@@ -19,10 +19,12 @@ const NullValidator: React.FC<{ nullValidatorProps: NullValidatorProps }> = (
     name: nullValidatorProps.name,
     validationFn,
     pubSub: nullValidatorProps.pubSub,
-    formValues: nullValidatorProps.formValues
+    formValues: nullValidatorProps.formValues,
   }
-  debugger
-  return <BaseValitor children={props.children} validatorProps={validatorProps} />
+
+  return (
+    <BaseValitor children={props.children} validatorProps={validatorProps} />
+  )
 }
 
 export default NullValidator
