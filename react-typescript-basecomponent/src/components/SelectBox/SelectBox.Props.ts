@@ -1,13 +1,8 @@
 import SelectBoxOption from "./SelectBoxOption"
+import IBaseProps from "../IBase.Props"
 
-interface SelectBoxProps {
+interface SelectBoxProps extends IBaseProps {
   options: Array<SelectBoxOption>,
-  name: string;
-  id: string;
-  eleRef?: React.MutableRefObject<HTMLSelectElement>;
-  valid?: boolean;
-  validationError?: string;
-  label: string;
 }
 
 export default SelectBoxProps

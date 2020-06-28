@@ -20,6 +20,11 @@ import { NumberBox, NumberBoxProps } from "./components/NumberBox"
 
 import { Title, TitleProps } from "./components/Recepies/Title"
 import { Checkbox, CheckboxProps } from "./components/Checkbox"
+import {
+  SelectBoxOption,
+  SelectBoxProps,
+  SelectBox,
+} from "./components/SelectBox"
 
 const fromProps: FormProps = {
   submitHandler: () => {
@@ -97,11 +102,27 @@ const App = () => {
   )
 }
 
+const countriesOptions = new Array<SelectBoxOption>()
+countriesOptions.push(new SelectBoxOption("", ""))
+countriesOptions.push(new SelectBoxOption("United Kingdom", "UK"))
+countriesOptions.push(new SelectBoxOption("Pakistan", "Pakistan"))
+countriesOptions.push(new SelectBoxOption("United States of America", "USA"))
+
+const selectBoxProps: SelectBoxProps = {
+  id: "ddl_countries",
+  name: "ddl_countries",
+  label: "Country :",
+  options: countriesOptions,
+  valid: true,
+}
+
 const App1 = () => {
   return (
     <section className="container mx-auto">
       <h1 className="text-6xl">Basic Form Example</h1>
       <Form fromProps={fromProps}>
+        <Title titleProps={titleProps} />
+        <SelectBox selectBoxProps={selectBoxProps} />
         <Checkbox checkboxProps={checkboxProps} />
         <RangeValidator rangeValidatorProps={rangeValidatorProps}>
           <NumberBox numberBoxProps={numberBoxProps} />

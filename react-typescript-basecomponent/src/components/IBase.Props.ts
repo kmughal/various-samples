@@ -1,12 +1,12 @@
 interface IBaseProps {
   formValues?: [() => any];
   valid?: boolean;
-  eleRef?: React.MutableRefObject<HTMLInputElement>;
+  eleRef?: React.MutableRefObject<HTMLInputElement | HTMLSelectElement>;
   name: string;
   label: string;
   validationError?: string;
-  hasValidator: false;
-  value: string;
+  hasValidator?: boolean;
+  value?: string;
   id: string;
 }
 

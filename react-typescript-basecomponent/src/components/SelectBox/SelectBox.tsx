@@ -1,9 +1,12 @@
 import * as React from "react"
 import SelectBoxProps from "./SelectBox.Props"
 import SelectBoxOption from "./SelectBoxOption"
+import { setPropsWhenNoValidationRequired } from "../../utils/helpers"
 
 const SelectBox: React.FC<{ selectBoxProps: SelectBoxProps }> = (props) => {
   const selectBoxProps = props.selectBoxProps
+
+  setPropsWhenNoValidationRequired(selectBoxProps)
 
   const selectOptions = selectBoxProps.options.map(
     (option: SelectBoxOption, index: number) => (
