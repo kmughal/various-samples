@@ -18,5 +18,5 @@ class RadioButtonOption {
 
 export default RadioButtonProps
 
-//TODO Need to finish this
+//TODO Radio button : complete this
 // TODO Also controls without validator should work as well!

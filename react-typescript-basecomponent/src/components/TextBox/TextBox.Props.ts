@@ -1,11 +1,7 @@
-interface TextBoxProps {
-  label: string;
-  name: string;
-  id: string;
+import IBaseProps from "../IBase.Props";
+
+interface TextBoxProps extends IBaseProps {
   changeHandler?: KeyboardEvent;
-  eleRef?: React.MutableRefObject<HTMLInputElement>;
-  valid?: boolean;
-  validationError?: string
 }
 
 export default TextBoxProps

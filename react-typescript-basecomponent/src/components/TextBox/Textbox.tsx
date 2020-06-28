@@ -1,10 +1,13 @@
 import * as React from "react"
 import TextBoxProps from "./TextBox.Props"
+import { setPropsWhenNoValidationRequired } from "../../utils/helpers"
 
 const TextBox: React.FC<{ textBoxProps: TextBoxProps }> = ({
   children,
   textBoxProps,
 }) => {
+  setPropsWhenNoValidationRequired(textBoxProps)
+
   return (
     <div>
       <label className="block text-gray-700 text-sm font-bold mb-2">

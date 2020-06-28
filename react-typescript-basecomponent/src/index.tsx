@@ -63,9 +63,11 @@ const checkboxProps: CheckboxProps = {
   name: "terms",
   value: "terms",
   label: "Have you read the terms and conditions :",
-  validationError: "Please select Terms and Conditions"
+  validationError: "Please select Terms and Conditions",
 }
-const nullCheckboxValidatorProps: NullValidatorProps = { name: "termsandconditions" }
+const nullCheckboxValidatorProps: NullValidatorProps = {
+  name: "termsandconditions",
+}
 
 const App = () => {
   return (
@@ -95,4 +97,23 @@ const App = () => {
   )
 }
 
-render(<App />, document.getElementById("app"))
+const App1 = () => {
+  return (
+    <section className="container mx-auto">
+      <h1 className="text-6xl">Basic Form Example</h1>
+      <Form fromProps={fromProps}>
+        <Checkbox checkboxProps={checkboxProps} />
+        <RangeValidator rangeValidatorProps={rangeValidatorProps}>
+          <NumberBox numberBoxProps={numberBoxProps} />
+        </RangeValidator>
+        <div>
+          <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Submit
+          </button>
+        </div>
+      </Form>
+    </section>
+  )
+}
+
+render(<App1 />, document.getElementById("app"))

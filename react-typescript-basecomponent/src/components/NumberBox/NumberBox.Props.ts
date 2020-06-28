@@ -1,11 +1,7 @@
-interface NumberBoxProps {
-  label: string;
-  name: string;
-  id: string;
-  changeHandler?: KeyboardEvent;
-  eleRef?: React.MutableRefObject<HTMLInputElement>;
-  valid?: boolean,
-  validationError?:string
+import IBaseProps from "../IBase.Props";
+
+interface NumberBoxProps extends IBaseProps {
+  
 }
 
 export default NumberBoxProps

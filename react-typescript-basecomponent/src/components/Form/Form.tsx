@@ -1,9 +1,6 @@
 import * as React from "react"
 import FormProps from "./Form.Props"
 
-const pubsub = []
-const formValues = []
-
 const flatList = (arr: Array<any>) => {
   return arr.reduce((prev, current) => {
     prev.push(current[Object.keys(current)[0]])
@@ -18,13 +15,19 @@ const runValidation = (arr: Array<any>) => {
 }
 
 const Form: React.FC<{ fromProps: FormProps }> = (props) => {
+  const pubsub = []
+  const formValues = []
   const [formFields, setformFields] = React.useState(null)
   const submitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
     setformFields(null)
-    debugger
-    const flatListOfPubSub = flatList(pubsub)
-    const validationResult = runValidation(flatListOfPubSub)
-    if (validationResult) document.body.style.background = "red"
+    let validationFailed: boolean = false
+
+    // there are not validators!
+    if (pubsub.length) {
+      const flatListOfPubSub = flatList(pubsub)
+      validationFailed = runValidation(flatListOfPubSub)
+    }
+    if (validationFailed) document.body.style.background = "red"
     else {
       const values = []
       formValues.forEach((v) => values.push(v()))
@@ -38,13 +41,12 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
   const children = props.children as any
   return (
     <form onSubmit={submitHandler}>
-     
       {React.Children.map(children, (child, index) => {
         let props = OverrideProperty(child.props, "pubSub", pubsub)
         OverrideProperty(props, "formValues", formValues)
         return React.cloneElement(child, { ...props })
       })}
-       {formFields && <pre>{JSON.stringify(formFields, null, 2)}</pre>}
+      {formFields && <pre>{JSON.stringify(formFields, null, 2)}</pre>}
     </form>
   )
 }
