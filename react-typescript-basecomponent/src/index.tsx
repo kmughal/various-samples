@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render } from "react-dom"
+
 import {
   FormProps,
   TextBoxProps,
@@ -52,6 +53,7 @@ const rangeValidatorProps: RangeValidatorProps = {
   max: 20,
   min: 5,
 }
+
 const numberBoxProps: NumberBoxProps = {
   id: "age",
   name: "age",
