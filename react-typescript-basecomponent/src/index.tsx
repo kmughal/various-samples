@@ -70,36 +70,9 @@ const checkboxProps: CheckboxProps = {
   label: "Have you read the terms and conditions :",
   validationError: "Please select Terms and Conditions",
 }
+
 const nullCheckboxValidatorProps: NullValidatorProps = {
   name: "termsandconditions",
-}
-
-const App = () => {
-  return (
-    <section className="container mx-auto">
-      <h1 className="text-6xl">Basic Form Example</h1>
-      <Form fromProps={fromProps}>
-        <Title titleProps={titleProps} />
-        <NullValidator nullValidatorProps={nullValidatorProps}>
-          <TextBox textBoxProps={textBoxProps} />
-        </NullValidator>
-
-        <RangeValidator rangeValidatorProps={rangeValidatorProps}>
-          <NumberBox numberBoxProps={numberBoxProps} />
-        </RangeValidator>
-        <PostCode postCodeProps={postCodeProps} />
-
-        <NullValidator nullValidatorProps={nullCheckboxValidatorProps}>
-          <Checkbox checkboxProps={checkboxProps} />
-        </NullValidator>
-        <div>
-          <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Submit
-          </button>
-        </div>
-      </Form>
-    </section>
-  )
 }
 
 const countriesOptions = new Array<SelectBoxOption>()
@@ -116,17 +89,38 @@ const selectBoxProps: SelectBoxProps = {
   valid: true,
 }
 
-const App1 = () => {
+const marriedCheckboxProps: CheckboxProps = {
+  id: "chk_married",
+  name: "chk_married",
+  value: "Married",
+  label: "Are you married :",
+}
+
+const App = () => {
   return (
     <section className="container mx-auto">
       <h1 className="text-6xl">Basic Form Example</h1>
       <Form fromProps={fromProps}>
         <Title titleProps={titleProps} />
-        <SelectBox selectBoxProps={selectBoxProps} />
-        <Checkbox checkboxProps={checkboxProps} />
+
+        <NullValidator nullValidatorProps={nullValidatorProps}>
+          <TextBox textBoxProps={textBoxProps} />
+        </NullValidator>
+
+        <Checkbox checkboxProps={marriedCheckboxProps} />
+
         <RangeValidator rangeValidatorProps={rangeValidatorProps}>
           <NumberBox numberBoxProps={numberBoxProps} />
         </RangeValidator>
+
+        <SelectBox selectBoxProps={selectBoxProps} />
+
+        <PostCode postCodeProps={postCodeProps} />
+
+        <NullValidator nullValidatorProps={nullCheckboxValidatorProps}>
+          <Checkbox checkboxProps={checkboxProps} />
+        </NullValidator>
+
         <div>
           <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Submit
@@ -137,4 +131,4 @@ const App1 = () => {
   )
 }
 
-render(<App1 />, document.getElementById("app"))
+render(<App />, document.getElementById("app"))

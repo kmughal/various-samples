@@ -9,14 +9,12 @@ const NumberBox: React.FC<{ checkboxProps: CheckboxProps }> = ({
   setPropsWhenNoValidationRequired(checkboxProps)
 
   return (
-    <div>
-      <label className="block text-gray-700 text-sm font-bold mb-2">
-        {checkboxProps.label}
-      </label>
+    <div className="m-1">
+      {checkboxProps.label + " "}
       <input
         type="checkbox"
         id={checkboxProps.id}
-        ref={checkboxProps.eleRef}
+        ref={checkboxProps.eleRef as React.MutableRefObject<HTMLInputElement>}
         name={checkboxProps.name}
         value={checkboxProps.value}
       />
