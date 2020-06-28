@@ -1,4 +1,4 @@
-import IBaseProps from "../IBase.Props";
+import IBaseProps from "../../IBase.Props";
 
 interface TextBoxProps extends IBaseProps {
   changeHandler?: KeyboardEvent;

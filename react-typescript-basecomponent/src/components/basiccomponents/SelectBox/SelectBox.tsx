@@ -1,7 +1,8 @@
 import * as React from "react"
 import SelectBoxProps from "./SelectBox.Props"
 import SelectBoxOption from "./SelectBoxOption"
-import { setPropsWhenNoValidationRequired } from "../../utils/helpers"
+import { setPropsWhenNoValidationRequired } from "../../../utils/helpers"
+
 
 const SelectBox: React.FC<{ selectBoxProps: SelectBoxProps }> = (props) => {
   const selectBoxProps = props.selectBoxProps

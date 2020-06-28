@@ -1,6 +1,6 @@
 import * as React from "react"
 import RadioButtonProps, { RadioButtonOption } from "./RadioButton.Props"
-import { setPropsWhenNoValidationRequired } from "../../utils/helpers"
+import { setPropsWhenNoValidationRequired } from "../../../utils/helpers"
 
 const RadioButtonList = (props) => {
   const { eleRef, radioButtonOptions, name } = props

@@ -4,7 +4,8 @@ import {
   RegexValidator,
   RegexValidatorProps,
 } from "../../Validators/RegexValidator"
-import { TextBox, TextBoxProps } from "../../TextBox"
+import { TextBoxProps, TextBox } from "../../basiccomponents"
+
 const PostCode: React.FC<{ postCodeProps: PostCodeProps }> = (props) => {
   const postCodeProps = props.postCodeProps
   const regexValidatorProps: RegexValidatorProps = {

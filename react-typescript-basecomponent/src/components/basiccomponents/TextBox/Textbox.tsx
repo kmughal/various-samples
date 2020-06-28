@@ -1,6 +1,6 @@
 import * as React from "react"
 import TextBoxProps from "./TextBox.Props"
-import { setPropsWhenNoValidationRequired } from "../../utils/helpers"
+import { setPropsWhenNoValidationRequired } from "../../../utils/helpers"
 
 const TextBox: React.FC<{ textBoxProps: TextBoxProps }> = ({
   children,

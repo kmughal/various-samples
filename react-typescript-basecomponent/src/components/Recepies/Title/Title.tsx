@@ -4,13 +4,17 @@ import {
   NullValidatorProps,
   NullValidator,
 } from "../../Validators/NullValidator"
-import { SelectBoxOption, SelectBoxProps, SelectBox } from "../../SelectBox"
+import {
+  SelectBoxOption,
+  SelectBoxProps,
+  SelectBox,
+} from "../../basiccomponents"
 
 const Title: React.FC<{ titleProps: TitleProps }> = (props) => {
   const selectBoxValidatorProps: NullValidatorProps = {
     name: props.titleProps.name,
     pubSub: props.titleProps.pubSub,
-    formValues:props.titleProps.formValues
+    formValues: props.titleProps.formValues,
   }
 
   const titles = new Array<SelectBoxOption>()

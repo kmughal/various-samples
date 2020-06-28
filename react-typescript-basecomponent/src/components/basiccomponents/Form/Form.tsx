@@ -1,6 +1,7 @@
 import * as React from "react"
 import FormProps from "./Form.Props"
-import { overrideProperty } from "../../utils/helpers"
+import { overrideProperty } from "../../../utils/helpers"
+ 
 
 const flatList = (arr: Array<any>) => {
   return arr.reduce((prev, current) => {

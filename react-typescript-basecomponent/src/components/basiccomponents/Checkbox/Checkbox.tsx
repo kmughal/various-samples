@@ -1,6 +1,6 @@
 import * as React from "react"
 import CheckboxProps from "./Checkbox.Props"
-import { setPropsWhenNoValidationRequired } from "../../utils/helpers"
+import { setPropsWhenNoValidationRequired } from "../../../utils/helpers"
 
 const NumberBox: React.FC<{ checkboxProps: CheckboxProps }> = ({
   children,

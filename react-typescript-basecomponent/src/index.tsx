@@ -1,34 +1,35 @@
 import * as React from "react"
 import { render } from "react-dom"
-import { Form, FormProps } from "./components/Form"
+import {
+  FormProps,
+  TextBoxProps,
+  NumberBoxProps,
+  CheckboxProps,
+  SelectBoxOption,
+  SelectBoxProps,
+  Form,
+  SelectBox,
+  NumberBox,
+  Checkbox,
+  TextBox,
+  RadioButton,
+  RadioButtonOption,
+  RadioButtonProps,
+} from "./components/basiccomponents"
 
 import {
   NullValidator,
   NullValidatorProps,
-} from "./components/Validators/NullValidator"
-
-import {
-  RangeValidator,
   RangeValidatorProps,
-} from "./components/Validators/RangeValidator"
+  RangeValidator,
+} from "./components/Validators"
 
-import { TextBox, TextBoxProps } from "./components/TextBox"
-
-import { PostCode, PostCodeProps } from "./components/Recepies/PostCode"
-
-import { NumberBox, NumberBoxProps } from "./components/NumberBox"
-
-import { Title, TitleProps } from "./components/Recepies/Title"
-import { Checkbox, CheckboxProps } from "./components/Checkbox"
 import {
-  SelectBoxOption,
-  SelectBoxProps,
-  SelectBox,
-} from "./components/SelectBox"
-import RadioButton from "./components/RadioButton/RadioButton"
-import RadioButtonProps, {
-  RadioButtonOption,
-} from "./components/RadioButton/RadioButton.Props"
+  Title,
+  TitleProps,
+  PostCode,
+  PostCodeProps,
+} from "./components/Recepies"
 
 const fromProps: FormProps = {
   submitHandler: () => {
