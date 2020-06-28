@@ -25,6 +25,10 @@ import {
   SelectBoxProps,
   SelectBox,
 } from "./components/SelectBox"
+import RadioButton from "./components/RadioButton/RadioButton"
+import RadioButtonProps, {
+  RadioButtonOption,
+} from "./components/RadioButton/RadioButton.Props"
 
 const fromProps: FormProps = {
   submitHandler: () => {
@@ -96,6 +100,24 @@ const marriedCheckboxProps: CheckboxProps = {
   label: "Are you married :",
 }
 
+const radioButtonOptions = new Array<RadioButtonOption>()
+radioButtonOptions.push(new RadioButtonOption("Car", "car"))
+radioButtonOptions.push(new RadioButtonOption("Walk", "walk"))
+radioButtonOptions.push(new RadioButtonOption("Train", "train"))
+radioButtonOptions.push(new RadioButtonOption("WFH", "wfh"))
+
+const radioButtonProps: RadioButtonProps = {
+  id: "transport_option",
+  name: "transport_option",
+  label: "How do you travel ?",
+  radioButtonOptions: radioButtonOptions,
+  validationError: "Please select a valid travel option!",
+}
+
+const nullTravelValidatorProps: NullValidatorProps = {
+  name: "null_travel_validator",
+}
+
 const App = () => {
   return (
     <section className="container mx-auto">
@@ -116,6 +138,10 @@ const App = () => {
         <SelectBox selectBoxProps={selectBoxProps} />
 
         <PostCode postCodeProps={postCodeProps} />
+
+        <NullValidator nullValidatorProps={nullTravelValidatorProps}>
+          <RadioButton radioButtonProps={radioButtonProps} />
+        </NullValidator>
 
         <NullValidator nullValidatorProps={nullCheckboxValidatorProps}>
           <Checkbox checkboxProps={checkboxProps} />

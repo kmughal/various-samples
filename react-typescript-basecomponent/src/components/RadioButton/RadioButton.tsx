@@ -1,21 +1,53 @@
 import * as React from "react"
-import RadioButtonProps from "./RadioButton.Props"
+import RadioButtonProps, { RadioButtonOption } from "./RadioButton.Props"
+import { setPropsWhenNoValidationRequired } from "../../utils/helpers"
+
+const RadioButtonList = (props) => {
+  const { eleRef, radioButtonOptions, name } = props
+  const markSelection = (event) => {
+    eleRef.current.value = event.target.value
+  }
+  return radioButtonOptions.map((rd: RadioButtonOption, index: number) => {
+    return (
+      <div key={index}>
+        <input
+          type="radio"
+          id={`${name}_{index}`}
+          name={name}
+          value={rd.value}
+          onClick={markSelection}
+        />
+        {"  " + rd.text}
+      </div>
+    )
+  })
+}
 
 const RadioButton: React.FC<{ radioButtonProps: RadioButtonProps }> = ({
   children,
   radioButtonProps,
 }) => {
+  setPropsWhenNoValidationRequired(radioButtonProps)
+
+  const list = radioButtonProps.radioButtonOptions
+
   return (
     <div>
+      <input
+        type="hidden"
+        id={radioButtonProps.id}
+        name={radioButtonProps.name}
+        ref={
+          radioButtonProps.eleRef as React.MutableRefObject<HTMLInputElement>
+        }
+      />
       <label className="block text-gray-700 text-sm font-bold mb-2">
         {radioButtonProps.label}
       </label>
-      <input
-        type="radio"
-        id={radioButtonProps.id}
+      <RadioButtonList
         name={radioButtonProps.name}
-        value={radioButtonProps.value}
-        ref={radioButtonProps.eleRef}
+        eleRef={radioButtonProps.eleRef}
+        radioButtonOptions={radioButtonProps.radioButtonOptions}
       />
       {!radioButtonProps.valid && (
         <div

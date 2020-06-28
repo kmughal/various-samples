@@ -1,16 +1,14 @@
-interface RadioButtonProps {
-  label: string;
-  name: string;
-  id: string;
+import IBaseProps from "../IBase.Props";
+
+interface RadioButtonProps extends IBaseProps {
+
   changeHandler?: KeyboardEvent;
-  eleRef?: React.MutableRefObject<HTMLInputElement>;
-  valid?: boolean,
-  validationError?: string;
-  value: string;
-  radioButtonOptions: [RadioButtonOption]
+
+
+  radioButtonOptions: Array<RadioButtonOption>
 }
 
-class RadioButtonOption {
+export class RadioButtonOption {
   constructor(public text: string, public value: string) {
 
   }
