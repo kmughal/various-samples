@@ -1,5 +1,6 @@
 import * as React from "react"
 import FormProps from "./Form.Props"
+import { overrideProperty } from "../../utils/helpers"
 
 const flatList = (arr: Array<any>) => {
   return arr.reduce((prev, current) => {
@@ -27,7 +28,7 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
       const flatListOfPubSub = flatList(pubsub)
       validationFailed = runValidation(flatListOfPubSub)
     }
-    if (validationFailed) document.body.style.background = "red"
+    if (validationFailed) document.body.style.background = "pink"
     else {
       const values = []
       formValues.forEach((v) => values.push(v()))
@@ -42,8 +43,8 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
   return (
     <form onSubmit={submitHandler}>
       {React.Children.map(children, (child, index) => {
-        let props = OverrideProperty(child.props, "pubSub", pubsub)
-        OverrideProperty(props, "formValues", formValues)
+        let props = overrideProperty(child.props, "pubSub", pubsub)
+        overrideProperty(props, "formValues", formValues)
         return React.cloneElement(child, { ...props })
       })}
       {formFields && <pre>{JSON.stringify(formFields, null, 2)}</pre>}
@@ -52,24 +53,3 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
 }
 
 export default Form
-
-export function OverrideProperty(
-  props: any,
-  propertyName: string,
-  overrideValue: any
-) {
-  let { children, ...rest } = props
-  for (let i in rest) {
-    const item = rest[i]
-    let propertyFound = false
-    for (let z in item) {
-      if (z === propertyName) {
-        item[z] = overrideValue
-        propertyFound = true
-        break
-      }
-    }
-    if (!propertyFound) item[propertyName] = overrideValue
-  }
-  return { children, ...rest }
-}

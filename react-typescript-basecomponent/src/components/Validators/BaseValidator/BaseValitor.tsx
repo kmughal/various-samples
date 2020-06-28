@@ -1,6 +1,6 @@
 import * as React from "react"
 import BaseValidatorProps from "./BaseValidator.Props"
-import { OverrideProperty } from "../../Form/Form"
+import { overrideProperty } from "../../../utils/helpers"
 
 const BaseValidator: React.FC<{ validatorProps: BaseValidatorProps }> = (
   props
@@ -31,10 +31,10 @@ const BaseValidator: React.FC<{ validatorProps: BaseValidatorProps }> = (
   return (
     <>
       {React.Children.map(children as any, (child, index) => {
-        let props = OverrideProperty(child.props, "eleRef", eleRef)
-        props = OverrideProperty(child.props, "valid", valid)
-        props = OverrideProperty(child.props, "setValid", setValid)
-        props = OverrideProperty(child.props, "hasValidator", true)
+        let props = overrideProperty(child.props, "eleRef", eleRef)
+        props = overrideProperty(child.props, "valid", valid)
+        props = overrideProperty(child.props, "setValid", setValid)
+        props = overrideProperty(child.props, "hasValidator", true)
         return React.cloneElement(child as any, {
           ...props,
         })

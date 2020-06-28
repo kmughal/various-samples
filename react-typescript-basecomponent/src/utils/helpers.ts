@@ -17,5 +17,25 @@ const setPropsWhenNoValidationRequired = (props: IBaseProps): void => {
   props.valid = true
 }
 
+function overrideProperty(
+  props: any,
+  propertyName: string,
+  overrideValue: any
+) {
+  let { children, ...rest } = props
+  for (let i in rest) {
+    const item = rest[i]
+    let propertyFound = false
+    for (let z in item) {
+      if (z === propertyName) {
+        item[z] = overrideValue
+        propertyFound = true
+        break
+      }
+    }
+    if (!propertyFound) item[propertyName] = overrideValue
+  }
+  return { children, ...rest }
+}
 
-export { setPropsWhenNoValidationRequired }
+export { setPropsWhenNoValidationRequired, overrideProperty }

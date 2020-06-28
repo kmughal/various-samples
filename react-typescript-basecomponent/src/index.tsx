@@ -28,7 +28,7 @@ import {
 
 const fromProps: FormProps = {
   submitHandler: () => {
-    document.body.style.background = "green"
+    document.body.style.background = "yellow"
   },
 }
 
