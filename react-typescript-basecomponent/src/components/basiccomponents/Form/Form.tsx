@@ -1,7 +1,6 @@
 import * as React from "react"
 import FormProps from "./Form.Props"
-import { overrideProperty } from "../../../utils/helpers"
- 
+import { overrideProperty, JsonToString } from "../../../utils/helpers"
 
 const flatList = (arr: Array<any>) => {
   return arr.reduce((prev, current) => {
@@ -41,6 +40,7 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
   }
 
   const children = props.children as any
+  console.log(formFields)
   return (
     <form onSubmit={submitHandler}>
       {React.Children.map(children, (child, index) => {
@@ -48,7 +48,7 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
         overrideProperty(props, "formValues", formValues)
         return React.cloneElement(child, { ...props })
       })}
-      {formFields && <pre>{JSON.stringify(formFields, null, 2)}</pre>}
+      {formFields && <pre>{JsonToString(formFields)}</pre>}
     </form>
   )
 }

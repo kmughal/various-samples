@@ -8,7 +8,16 @@ const setPropsWhenNoValidationRequired = (props: IBaseProps): void => {
     let value = null
     if (ele.type === "checkbox") {
       value = (ele as HTMLInputElement).checked
-    } else {
+    }
+    else if (ele.type === "file") {
+      const files = (ele as HTMLInputElement).files;
+      if (files?.length === 0) {
+        value = null
+        return;
+      }
+      value = files[0]
+    }
+    else {
       value = ele.value
     }
     return { [props.name]: value }
@@ -38,4 +47,13 @@ function overrideProperty(
   return { children, ...rest }
 }
 
-export { setPropsWhenNoValidationRequired, overrideProperty }
+
+const JsonToString = obj => JSON.stringify(obj, (a, b) => {
+  return (b instanceof File) ? {
+    name: b.name,
+    size: b.size,
+    type: b.type
+  } : b;
+}, 2)
+
+export { setPropsWhenNoValidationRequired, overrideProperty, JsonToString }
