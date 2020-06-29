@@ -37,7 +37,7 @@ import {
 } from "./components/Recepies"
 
 const formProps: FormProps = {
-  submitHandler: () => {
+  submitHandler: (formData: FormData) => {
     document.body.style.background = "yellow"
   },
 }

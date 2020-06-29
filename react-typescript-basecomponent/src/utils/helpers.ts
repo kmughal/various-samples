@@ -5,14 +5,11 @@ const setPropsWhenNoValidationRequired = (props: IBaseProps): void => {
   if (props.hasValidator) return
   props.formValues.push(() => {
 
+    
     if (props.isMultiFileComponent) {
       const collection = []
       const files = props.files
-       
-      
-      debugger
       for (let i of files.getAll("files")) {
-        debugger
         collection.push(i)
       }
       return { [props.name]: collection }
@@ -34,6 +31,8 @@ const setPropsWhenNoValidationRequired = (props: IBaseProps): void => {
     else {
       value = ele.value
     }
+    props.formData.append(props.name, String(value))
+    
     return { [props.name]: value }
   })
   props.eleRef = React.useRef(null)

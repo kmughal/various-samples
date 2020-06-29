@@ -1,5 +1,5 @@
 interface FormProps {
-  submitHandler: () => void;
+  submitHandler: (formData: FormData) => void;
   formData?: FormData;
 }
 

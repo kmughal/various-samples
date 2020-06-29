@@ -33,7 +33,7 @@ const Form: React.FC<{ formProps: FormProps }> = (props) => {
       const values = []
       formValues.forEach((v) => values.push(v()))
       setformFields(values)
-      props.formProps.submitHandler()
+      props.formProps.submitHandler(props.formProps.formData)
     }
     event.preventDefault()
   }
