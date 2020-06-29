@@ -52,7 +52,6 @@ const textBoxProps: TextBoxProps = {
 }
 
 const rangeValidatorProps: RangeValidatorProps = {
-  id: "age",
   name: "age",
   max: 20,
   min: 5,
