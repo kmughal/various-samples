@@ -187,6 +187,7 @@ const App = () => {
 const multiFileUploadProps: MultiFileUploadProps = {
   id: "multi-file",
   name: "multi-file",
+  label: "Documents to upload :"
 }
 const App1 = () => {
   return (
