@@ -19,8 +19,8 @@ import {
 } from "./components/basiccomponents"
 
 import {
-  NullValidator,
-  NullValidatorProps,
+  RequiredValidator,
+  RequiredValidatorProps,
   RangeValidatorProps,
   RangeValidator,
 } from "./components/Validators"
@@ -38,7 +38,7 @@ const fromProps: FormProps = {
   },
 }
 
-const nullValidatorProps: NullValidatorProps = { name: "name" }
+const requiredValidatorProps: RequiredValidatorProps = { name: "name" }
 
 const textBoxProps: TextBoxProps = {
   name: "name",
@@ -78,7 +78,7 @@ const checkboxProps: CheckboxProps = {
   validationError: "Please select Terms and Conditions",
 }
 
-const nullCheckboxValidatorProps: NullValidatorProps = {
+const requiredCheckboxValidatorProps: RequiredValidatorProps = {
   name: "termsandconditions",
 }
 
@@ -117,7 +117,7 @@ const radioButtonProps: RadioButtonProps = {
   validationError: "Please select a valid travel option!",
 }
 
-const nullTravelValidatorProps: NullValidatorProps = {
+const requiredTravelValidatorProps: RequiredValidatorProps = {
   name: "null_travel_validator",
 }
 
@@ -128,9 +128,9 @@ const App = () => {
       <Form fromProps={fromProps}>
         <Title titleProps={titleProps} />
 
-        <NullValidator nullValidatorProps={nullValidatorProps}>
+        <RequiredValidator requiredValidatorProps={requiredValidatorProps}>
           <TextBox textBoxProps={textBoxProps} />
-        </NullValidator>
+        </RequiredValidator>
 
         <Checkbox checkboxProps={marriedCheckboxProps} />
 
@@ -142,13 +142,13 @@ const App = () => {
 
         <PostCode postCodeProps={postCodeProps} />
 
-        <NullValidator nullValidatorProps={nullTravelValidatorProps}>
+        <RequiredValidator requiredValidatorProps={requiredTravelValidatorProps}>
           <RadioButton radioButtonProps={radioButtonProps} />
-        </NullValidator>
+        </RequiredValidator>
 
-        <NullValidator nullValidatorProps={nullCheckboxValidatorProps}>
+        <RequiredValidator requiredValidatorProps={requiredCheckboxValidatorProps}>
           <Checkbox checkboxProps={checkboxProps} />
-        </NullValidator>
+        </RequiredValidator>
 
         <div>
           <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

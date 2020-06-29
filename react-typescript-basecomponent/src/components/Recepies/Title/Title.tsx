@@ -1,9 +1,9 @@
 import * as React from "react"
 import { TitleProps } from "."
 import {
-  NullValidatorProps,
-  NullValidator,
-} from "../../Validators/NullValidator"
+  RequiredValidatorProps,
+  RequiredValidator,
+} from "../../validators/RequiredValidator"
 import {
   SelectBoxOption,
   SelectBoxProps,
@@ -11,7 +11,7 @@ import {
 } from "../../basiccomponents"
 
 const Title: React.FC<{ titleProps: TitleProps }> = (props) => {
-  const selectBoxValidatorProps: NullValidatorProps = {
+  const selectBoxValidatorProps: RequiredValidatorProps = {
     name: props.titleProps.name,
     pubSub: props.titleProps.pubSub,
     formValues: props.titleProps.formValues,
@@ -33,9 +33,9 @@ const Title: React.FC<{ titleProps: TitleProps }> = (props) => {
   }
 
   return (
-    <NullValidator nullValidatorProps={selectBoxValidatorProps}>
+    <RequiredValidator requiredValidatorProps={selectBoxValidatorProps}>
       <SelectBox selectBoxProps={selectBoxProps} />
-    </NullValidator>
+    </RequiredValidator>
   )
 }
 

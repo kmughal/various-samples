@@ -1,4 +1,4 @@
 export * from "./BaseValidator"
-export * from "./NullValidator"
+export * from "./RequiredValidator"
 export * from "./RangeValidator"
 export * from "./RegexValidator"

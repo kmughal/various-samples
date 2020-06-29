@@ -1,6 +1,6 @@
 interface RegexValidatorProps {
   pubSub: Array<any>;
-  formValues: [() => any];;
+  formValues: [() => any];
   name: string;
   regEXPattern: RegExp;
 }

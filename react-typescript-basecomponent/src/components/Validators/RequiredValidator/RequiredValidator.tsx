@@ -1,11 +1,11 @@
 import * as React from "react"
-import NullValidatorProps from "./NullValidator.Props"
+import RequiredValidatorProps from "./RequiredValidator.Props"
 import { BaseValidatorProps, BaseValitor } from "../BaseValidator"
 
-const NullValidator: React.FC<{ nullValidatorProps: NullValidatorProps }> = (
+const RequiredValidator: React.FC<{ requiredValidatorProps: RequiredValidatorProps }> = (
   props
 ) => {
-  const nullValidatorProps = props.nullValidatorProps
+  const requiredValidatorProps = props.requiredValidatorProps
 
   const validationFn = (
     eleRef: React.MutableRefObject<any>,
@@ -20,10 +20,10 @@ const NullValidator: React.FC<{ nullValidatorProps: NullValidatorProps }> = (
   }
 
   const validatorProps: BaseValidatorProps = {
-    name: nullValidatorProps.name,
+    name: requiredValidatorProps.name,
     validationFn,
-    pubSub: nullValidatorProps.pubSub,
-    formValues: nullValidatorProps.formValues,
+    pubSub: requiredValidatorProps.pubSub,
+    formValues: requiredValidatorProps.formValues,
   }
   
   return (
@@ -31,4 +31,4 @@ const NullValidator: React.FC<{ nullValidatorProps: NullValidatorProps }> = (
   )
 }
 
-export default NullValidator
+export default RequiredValidator
