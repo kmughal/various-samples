@@ -16,6 +16,8 @@ import {
   RadioButton,
   RadioButtonOption,
   RadioButtonProps,
+  SingleFileUpload,
+  SingleFileUploadProps,
 } from "./components/basiccomponents"
 
 import {
@@ -121,6 +123,18 @@ const requiredTravelValidatorProps: RequiredValidatorProps = {
   name: "null_travel_validator",
 }
 
+const singleFileUploadProps: SingleFileUploadProps = {
+  label: "Document :",
+  id: "file_upload",
+  name: "file_upload",
+  validationError: "Please upload the file as it is required!",
+  accept: ".jpeg",
+}
+
+const fileUploadRequired: RequiredValidatorProps = {
+  name: "single_file_required_upload",
+}
+
 const App = () => {
   return (
     <section className="container mx-auto">
@@ -142,11 +156,19 @@ const App = () => {
 
         <PostCode postCodeProps={postCodeProps} />
 
-        <RequiredValidator requiredValidatorProps={requiredTravelValidatorProps}>
+        <RequiredValidator
+          requiredValidatorProps={requiredTravelValidatorProps}
+        >
           <RadioButton radioButtonProps={radioButtonProps} />
         </RequiredValidator>
 
-        <RequiredValidator requiredValidatorProps={requiredCheckboxValidatorProps}>
+        <RequiredValidator requiredValidatorProps={fileUploadRequired}>
+          <SingleFileUpload singleFileUploadProps={singleFileUploadProps} />
+        </RequiredValidator>
+
+        <RequiredValidator
+          requiredValidatorProps={requiredCheckboxValidatorProps}
+        >
           <Checkbox checkboxProps={checkboxProps} />
         </RequiredValidator>
 
