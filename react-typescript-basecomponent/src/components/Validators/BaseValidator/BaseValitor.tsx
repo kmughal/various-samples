@@ -35,6 +35,8 @@ const BaseValidator: React.FC<{ validatorProps: BaseValidatorProps }> = (
         props = overrideProperty(child.props, "valid", valid)
         props = overrideProperty(child.props, "setValid", setValid)
         props = overrideProperty(child.props, "hasValidator", true)
+        props = overrideProperty(child.props, "frmRef", validatorProps.frmRef)
+
         return React.cloneElement(child as any, {
           ...props,
         })

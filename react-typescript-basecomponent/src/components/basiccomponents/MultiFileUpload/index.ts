@@ -1,2 +1,4 @@
-export * from "./MultiFileUpload"
-export * from "./MultiFileUpload.Props"
+import MultiFileUpload from "./MultiFileUpload"
+import MultiFileUploadProps from "./MultiFileUpload.Props"
+
+export { MultiFileUpload, MultiFileUploadProps }

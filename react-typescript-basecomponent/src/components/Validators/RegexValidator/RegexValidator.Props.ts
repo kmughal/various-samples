@@ -3,6 +3,7 @@ interface RegexValidatorProps {
   formValues: [() => any];
   name: string;
   regEXPattern: RegExp;
+  frmRef?: HTMLFormElement;
 }
 
 export default RegexValidatorProps

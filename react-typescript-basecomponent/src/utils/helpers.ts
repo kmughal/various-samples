@@ -4,6 +4,20 @@ import IBaseProps from "../components/IBase.Props"
 const setPropsWhenNoValidationRequired = (props: IBaseProps): void => {
   if (props.hasValidator) return
   props.formValues.push(() => {
+
+    if (props.isMultiFileComponent) {
+      const collection = []
+      const files = props.files
+       
+      
+      debugger
+      for (let i of files.getAll("files")) {
+        debugger
+        collection.push(i)
+      }
+      return { [props.name]: collection }
+    }
+
     let ele = props.eleRef.current
     let value = null
     if (ele.type === "checkbox") {

@@ -8,6 +8,9 @@ interface IBaseProps {
   hasValidator?: boolean;
   value?: string;
   id: string;
+  frmRef?: HTMLFormElement;
+  files?: FormData;
+  isMultiFileComponent?:boolean
 }
 
 export default IBaseProps

@@ -38,14 +38,15 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
 
     event.preventDefault()
   }
-
+  const frmRef = React.useRef(null)
   const children = props.children as any
   console.log(formFields)
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} ref={frmRef}>
       {React.Children.map(children, (child, index) => {
         let props = overrideProperty(child.props, "pubSub", pubsub)
         overrideProperty(props, "formValues", formValues)
+        overrideProperty(props, "frmRef", frmRef)
         return React.cloneElement(child, { ...props })
       })}
       {formFields && <pre>{JsonToString(formFields)}</pre>}

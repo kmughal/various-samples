@@ -1,4 +1,5 @@
 interface BaseValidatorProps {
+  frmRef?: HTMLFormElement
   name: string
   pubSub: Array<any>
   formValues?: [() => any];

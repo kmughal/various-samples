@@ -18,6 +18,8 @@ import {
   RadioButtonProps,
   SingleFileUpload,
   SingleFileUploadProps,
+  MultiFileUpload,
+  MultiFileUploadProps,
 } from "./components/basiccomponents"
 
 import {
@@ -182,4 +184,24 @@ const App = () => {
   )
 }
 
-render(<App />, document.getElementById("app"))
+const multiFileUploadProps: MultiFileUploadProps = {
+  id: "multi-file",
+  name: "multi-file",
+}
+const App1 = () => {
+  return (
+    <div className="container m-10 p-5">
+      <Form fromProps={fromProps}>
+        <Title titleProps={titleProps} />
+        <MultiFileUpload multiFileUploadProps={multiFileUploadProps} />
+        <div>
+          <button className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Submit
+          </button>
+        </div>
+      </Form>
+    </div>
+  )
+}
+
+render(<App1 />, document.getElementById("app"))
