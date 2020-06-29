@@ -15,7 +15,7 @@ const runValidation = (arr: Array<any>) => {
   return result.some((c) => !c)
 }
 
-const Form: React.FC<{ fromProps: FormProps }> = (props) => {
+const Form: React.FC<{ formProps: FormProps }> = (props) => {
   const pubsub = []
   const formValues = []
   const [formFields, setformFields] = React.useState(null)
@@ -33,21 +33,22 @@ const Form: React.FC<{ fromProps: FormProps }> = (props) => {
       const values = []
       formValues.forEach((v) => values.push(v()))
       setformFields(values)
-      props.fromProps.submitHandler()
+      props.formProps.submitHandler()
     }
-
     event.preventDefault()
   }
   const frmRef = React.useRef(null)
   const children = props.children as any
   console.log(formFields)
+  props.formProps.formData = props.formProps.formData ?? new FormData()
   return (
     <form onSubmit={submitHandler} ref={frmRef}>
       {React.Children.map(children, (child, index) => {
-        let props = overrideProperty(child.props, "pubSub", pubsub)
-        overrideProperty(props, "formValues", formValues)
-        overrideProperty(props, "frmRef", frmRef)
-        return React.cloneElement(child, { ...props })
+        let _props = overrideProperty(child.props, "pubSub", pubsub)
+        overrideProperty(_props, "formValues", formValues)
+        overrideProperty(_props, "frmRef", frmRef)
+        overrideProperty(_props, "formData", props.formProps.formData)
+        return React.cloneElement(child, { ..._props })
       })}
       {formFields && <pre>{JsonToString(formFields)}</pre>}
     </form>

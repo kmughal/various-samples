@@ -36,7 +36,7 @@ import {
   PostCodeProps,
 } from "./components/Recepies"
 
-const fromProps: FormProps = {
+const formProps: FormProps = {
   submitHandler: () => {
     document.body.style.background = "yellow"
   },
@@ -141,7 +141,7 @@ const App = () => {
   return (
     <section className="container mx-auto">
       <h1 className="text-6xl">Basic Form Example</h1>
-      <Form fromProps={fromProps}>
+      <Form formProps={formProps}>
         <Title titleProps={titleProps} />
 
         <RequiredValidator requiredValidatorProps={requiredValidatorProps}>
@@ -191,7 +191,7 @@ const multiFileUploadProps: MultiFileUploadProps = {
 const App1 = () => {
   return (
     <div className="container m-10 p-5">
-      <Form fromProps={fromProps}>
+      <Form formProps={formProps}>
         <Title titleProps={titleProps} />
         <MultiFileUpload multiFileUploadProps={multiFileUploadProps} />
         <div>
@@ -204,4 +204,4 @@ const App1 = () => {
   )
 }
 
-render(<App1 />, document.getElementById("app"))
+render(<App />, document.getElementById("app"))

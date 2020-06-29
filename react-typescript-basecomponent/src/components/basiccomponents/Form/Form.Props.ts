@@ -1,5 +1,6 @@
 interface FormProps {
-  submitHandler: () => void
+  submitHandler: () => void;
+  formData?: FormData;
 }
 
 export default FormProps

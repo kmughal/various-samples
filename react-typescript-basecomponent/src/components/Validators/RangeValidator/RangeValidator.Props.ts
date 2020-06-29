@@ -1,11 +1,8 @@
-interface RangeValidatorProps {
+import IValidatorBaseProps from "../IVadiatorBase.Props";
+
+interface RangeValidatorProps extends IValidatorBaseProps {
   min?: number;
   max?: number;
-  pubSub?: Array<any>;
-  formValues?: [() => any];
-  name: string;
-  id: string;
-  frmRef?: HTMLFormElement
 }
 
 

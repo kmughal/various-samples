@@ -1,9 +1,7 @@
-interface RegexValidatorProps {
-  pubSub: Array<any>;
-  formValues: [() => any];
-  name: string;
+import IValidatorBaseProps from "../IVadiatorBase.Props";
+
+interface RegexValidatorProps extends IValidatorBaseProps {
   regEXPattern: RegExp;
-  frmRef?: HTMLFormElement;
 }
 
 export default RegexValidatorProps

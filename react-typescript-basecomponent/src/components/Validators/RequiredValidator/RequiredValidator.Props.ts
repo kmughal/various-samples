@@ -1,8 +1,7 @@
-interface RequiredValidatorProps {
-  pubSub?: Array<any>;
-  formValues?: [() => any];
-  name: string;
-  frmRef?: HTMLFormElement
+import IValidatorBaseProps from "../IVadiatorBase.Props";
+
+interface RequiredValidatorProps extends IValidatorBaseProps {
+
 }
 
 export default RequiredValidatorProps

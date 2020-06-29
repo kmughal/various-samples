@@ -10,7 +10,8 @@ interface IBaseProps {
   id: string;
   frmRef?: HTMLFormElement;
   files?: FormData;
-  isMultiFileComponent?:boolean
+  isMultiFileComponent?: boolean;
+  formData?: FormData;
 }
 
 export default IBaseProps
