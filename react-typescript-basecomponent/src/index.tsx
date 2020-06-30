@@ -37,6 +37,7 @@ import {
 } from "./components/Recepies"
 
 const formProps: FormProps = {
+  showValidationSummary: true,
   supportOffline: true,
   submitHandler: (formData: FormData) => {
     document.body.style.background = "yellow"

@@ -2,21 +2,22 @@ import * as React from "react"
 import RequiredValidatorProps from "./RequiredValidator.Props"
 import { BaseValidatorProps, BaseValitor } from "../BaseValidator"
 
-const RequiredValidator: React.FC<{ requiredValidatorProps: RequiredValidatorProps }> = (
-  props
-) => {
+const RequiredValidator: React.FC<{
+  requiredValidatorProps: RequiredValidatorProps
+}> = (props) => {
   const requiredValidatorProps = props.requiredValidatorProps
 
   const validationFn = (
     eleRef: React.MutableRefObject<any>,
-    setValid: React.Dispatch<React.SetStateAction<boolean>>
+    setValid: React.Dispatch<React.SetStateAction<boolean>>,
+    validationMessage: string
   ) => {
     let expression = eleRef.current.value.length !== 0
     if (eleRef.current.type === "checkbox") {
       expression = eleRef.current.checked
     }
     setValid(expression)
-    return expression
+    return [expression, validationMessage]
   }
 
   const validatorProps: BaseValidatorProps = {
@@ -25,7 +26,7 @@ const RequiredValidator: React.FC<{ requiredValidatorProps: RequiredValidatorPro
     pubSub: requiredValidatorProps.pubSub,
     formValues: requiredValidatorProps.formValues,
   }
-  
+
   return (
     <BaseValitor children={props.children} validatorProps={validatorProps} />
   )

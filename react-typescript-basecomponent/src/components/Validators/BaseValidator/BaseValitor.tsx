@@ -9,10 +9,25 @@ const BaseValidator: React.FC<{ validatorProps: BaseValidatorProps }> = (
 
   const eleRef = React.useRef(null)
   const [valid, setValid] = React.useState(true)
+  const firstChild = React.Children.only(children) as any
+  const firstChildProps = firstChild.props
+  let validationMessage = "Something went wrong"
+  
+  for (let p in firstChildProps) {
+    let item = firstChildProps[p]
+    
+    for (let i in item) {
+      if (i === "validationError") validationMessage = item[i]
+    }
+  }
 
   const validation = {
     [`validate${validatorProps.name}`]: () =>
-      validatorProps.validationFn(eleRef, setValid),
+      validatorProps.validationFn(
+        eleRef,
+        setValid,
+        String(validationMessage)
+      ),
   }
 
   if (

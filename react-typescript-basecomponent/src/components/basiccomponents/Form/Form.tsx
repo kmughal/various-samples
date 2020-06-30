@@ -10,9 +10,34 @@ const flatList = (arr: Array<any>) => {
 }
 
 const runValidation = (arr: Array<any>) => {
-  const result = new Array<boolean>()
-  arr.forEach((i) => result.push(i()))
-  return result.some((c) => !c)
+  const validationMessages = []
+  let someValidationFailed = false
+  arr.forEach((validator) => {
+    const [validationResult, message] = validator()
+    if (!validationResult) {
+      someValidationFailed = true
+      validationMessages.push(message)
+    }
+  })
+  return [someValidationFailed, validationMessages]
+}
+
+const ValidationSummary = ({ errors }) => {
+  if (errors?.length == 0) return
+
+  return (
+    <>
+      <div
+        className="bg-orange-lightest border-l-4 border-orange text-orange-dark p-4"
+        role="alert"
+      >
+        <p className="font-bold">Validation Summary</p>
+        <ol>
+          {errors.map((error, index) => <li key={index}>{error}</li>}
+        </ol>
+      </div>
+    </>
+  )
 }
 
 const AlertMessage = (_) => (
@@ -44,11 +69,16 @@ const Form: React.FC<{ formProps: FormProps }> = (props) => {
   const formValues = []
   const [formFields, setformFields] = React.useState(null)
   const [online, setOnline] = React.useState(navigator.onLine)
+  const [
+    validationSummaryMessage,
+    setValidationSummaryMessage,
+  ] = React.useState(null)
 
   const submitForm = () => {
     const isFormComplted = props.formProps.formWaitingForSubmission
     if (isFormComplted) {
-      if(online && props.formProps.supportOffline) alert("internet is back we are sending your form...")
+      if (online && props.formProps.supportOffline)
+        alert("internet is back we are sending your form...")
       document.body.style.background = "white"
       props.formProps.submitHandler(props.formProps.formData)
     }
@@ -74,15 +104,18 @@ const Form: React.FC<{ formProps: FormProps }> = (props) => {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
     setformFields(null)
-    let validationFailed: boolean = false
+    let validationFailed = null
 
     // there are not validators!
     if (pubsub.length) {
       const flatListOfPubSub = flatList(pubsub)
       validationFailed = runValidation(flatListOfPubSub)
     }
-    if (validationFailed) document.body.style.background = "pink"
-    else {
+    if (validationFailed[0]) {
+      document.body.style.background = "pink"
+      setValidationSummaryMessage(validationFailed[1])
+    } else {
+      setValidationSummaryMessage(null)
       const values = []
       formValues.forEach((v) => values.push(v()))
       setformFields(values)
@@ -104,6 +137,10 @@ const Form: React.FC<{ formProps: FormProps }> = (props) => {
   return (
     <>
       {props.formProps.supportOffline && !online && <AlertMessage />}
+      { props.formProps.showValidationSummary &&
+        validationSummaryMessage && (
+        <ValidationSummary errors={validationSummaryMessage} />
+      )}
       <form onSubmit={submitHandler} ref={frmRef}>
         {React.Children.map(children, (child, index) => {
           let _props = overrideProperty(child.props, "pubSub", pubsub)

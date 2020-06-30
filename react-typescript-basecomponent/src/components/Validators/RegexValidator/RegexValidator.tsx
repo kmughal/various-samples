@@ -10,20 +10,21 @@ const RegexValidator: React.FC<{ regexValidatorProps: RegexValidatorProps }> = (
 
   const validationFn = (
     eleRef: React.MutableRefObject<any>,
-    setValid: React.Dispatch<React.SetStateAction<boolean>>
+    setValid: React.Dispatch<React.SetStateAction<boolean>>,
+    validationMessage: string
   ) => {
     const regExResult = regexValidatorProps.regEXPattern.test(
       eleRef.current.value
     )
     setValid(regExResult)
-    return regExResult
+    return [regExResult, validationMessage]
   }
 
   const validatorProps: BaseValidatorProps = {
     name: regexValidatorProps.name,
     validationFn,
     pubSub: regexValidatorProps.pubSub,
-    formValues: regexValidatorProps.formValues
+    formValues: regexValidatorProps.formValues,
   }
 
   return (
