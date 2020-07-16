@@ -4,31 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="./reactive-model.js"></script>
   </head>
   <body>
     <div id="app"></div>
     <div id="app1"></div>
+    <div id="timer"></div>
     <script>
-      const list = []
+      const [value, updater, addSubscriber] = getState(0)
 
-      const [value, updater] = getState(0)
-      const [counter, setCounter] = getState(50)
-      console.log(value === counter)
-      addSubscriber(
-        value,
-        function (value) {
-          return "value :" + value
-        },
-        "app"
-      )
+      const [counter, setCounter, addSubscriberForCounter] = getState(50)
 
-      addSubscriber(
-        counter,
-        function (_counter) {
-          return (
-            "Counter Value :" + _counter + "<button id='btn'>Counter</button>"
-          )
-        },
+      addSubscriber((data) => `value: ${data}`, "app")
+
+      addSubscriberForCounter(
+        (data) => `Counter : ${data} <button id='btn'>Counter</button>`,
         "app1",
         [
           {
@@ -36,67 +26,21 @@
             event: "click",
             method: function () {
               setCounter(counter.value + 5)
-              publish(counter)
             },
           },
         ]
       )
 
       updater(value.value + 1)
-      updater(value.value + 1)
-      updater(value.value + 1)
-      publish(value)
 
       setCounter(counter.value + 5)
-      setCounter(counter.value + 5)
-      publish(counter)
 
-      function publish(_v) {
-        for (const i in list) {
-          if (Object.is(list[i].reference, _v)) {
-            list[i].callback(_v.value)
-            if (list[i].attachEvents) {
-              for (let e in list[i].attachEvents) {
-                
-                document
-                  .getElementById(list[i].attachEvents[e].id)
-                  .addEventListener(
-                    list[i].attachEvents[e].event,
-                    list[i].attachEvents[e].method
-                  )
-              }
-            }
-          }
-        }
-      }
+      const [timer, setTimer, addSubscriberForTimer] = getState(new Date())
+      addSubscriberForTimer((data) => `Timer : ${data.toString()} `, "timer")
 
-      function addSubscriber(_value, markupFunc, el, attachEvents) {
-        var sameref = false
-        for (let i in list) {
-          var f = Object.is(list[i].reference, _value)
-          if (f) sameref = true
-        }
-
-        if (sameref) return
-        list.push({
-          reference: _value,
-          callback: function (data) {
-            const html = markupFunc(data)
-            document.getElementById(el).innerHTML = html
-          },
-          attachEvents,
-        })
-      }
-
-      function getState(defaultValue = null) {
-        return new (function () {
-          let _value = { value: defaultValue }
-          function updater(value) {
-            _value.value = value
-          }
-          return [_value, updater]
-        })()
-      }
+      setInterval(() => {
+        setTimer(new Date())
+      }, 0)
     </script>
   </body>
 </html>
