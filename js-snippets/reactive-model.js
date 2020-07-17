@@ -46,3 +46,47 @@ function getState(defaultValue = null) {
     return [_value, updater, addSubscriber]
   })()
 }
+
+function button(strings, ...args) {
+  const events = []
+  const props = []
+  for (let index in strings) {
+    var part = String(strings[index]).replace("=", "").replace(" ", "")
+    if (part.length === 0) continue
+    part = String(part).toLocaleLowerCase()
+    if (part.startsWith("on")) {
+      events.push({ name: part.replace("on", ""), handler: args[index] })
+    } else {
+      props.push({ name: part, value: args[index] })
+    }
+  }
+
+  return {
+    type: "button",
+    events,
+    props,
+  }
+}
+
+function addNode(parentEl, component) {
+  const ele = document.createElement(component.type)
+  parentEl.appendChild(ele)
+  for (let prop of component.props) {
+    ele.setAttribute(prop.name, prop.value)
+  }
+  ele.textContent = component.props.filter((x) => x.name === "content")[0].value
+
+  for (let event of component.events) {
+    ele.addEventListener(event.name, event.handler)
+  }
+}
+
+function clickHandler() {
+  console.log("clicked")
+}
+var id = "id_btn"
+var buttonParts = button`onClick=${clickHandler} id=${id} content=${"hello world"}`
+
+var parentEl = document.getElementById("rhtml")
+
+addNode(parentEl, buttonParts)

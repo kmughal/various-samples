@@ -4,12 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="./reactive-model.js"></script>
+    
   </head>
   <body>
+    <div id="rhtml">
+      <h1>Rhtml</h1>
+    </div>
     <div id="app"></div>
     <div id="app1"></div>
     <div id="timer"></div>
+    <script src="./reactive-model.js"></script>
     <script>
       const [value, updater, addSubscriber] = getState(0)
 
@@ -30,6 +34,7 @@
           },
         ]
       )
+
 
       updater(value.value + 1)
 
