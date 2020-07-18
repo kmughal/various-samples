@@ -47,7 +47,7 @@ function getState(defaultValue = null) {
   })()
 }
 
-function button(strings, ...args) {
+const createElement = (tagName) => (strings, ...args) => {
   const events = []
   const props = []
   for (let index in strings) {
@@ -62,7 +62,7 @@ function button(strings, ...args) {
   }
 
   return {
-    type: "button",
+    type: tagName,
     events,
     props,
   }
@@ -85,6 +85,8 @@ function clickHandler() {
   console.log("clicked")
 }
 var id = "id_btn"
+const button = createElement("button")
+
 var buttonParts = button`onClick=${clickHandler} id=${id} content=${"hello world"}`
 
 var parentEl = document.getElementById("rhtml")
