@@ -1,4 +1,4 @@
-function getState(defaultValue = null) {
+function createReactiveModel(defaultValue = null) {
   const list = []
 
   function publish(_v) {
@@ -22,7 +22,7 @@ function getState(defaultValue = null) {
   return new (function () {
     let _value = { value: defaultValue }
 
-    function addSubscriber(markupFunc, el, attachEvents) {
+    function addSubscriber(markupFunc, parentId, eleId) {
       var sameref = false
       for (let i in list) {
         var f = Object.is(list[i].reference, _value)
@@ -34,9 +34,13 @@ function getState(defaultValue = null) {
         reference: _value,
         callback: function (data) {
           const html = markupFunc(data)
-          document.getElementById(el).innerHTML = html
+          const parent = document.getElementById(parentId)
+          if (parent) addNode(parent, html)
+          else {
+            const ele = document.getElementById(eleId)
+            addNode(null, html, ele)
+          }
         },
-        attachEvents,
       })
     }
     function updater(value) {
@@ -50,16 +54,19 @@ function getState(defaultValue = null) {
 const createElement = (tagName) => (strings, ...args) => {
   const events = []
   const props = []
-  for (let index in strings) {
-    var part = String(strings[index]).replace("=", "").replace(" ", "")
-    if (part.length === 0) continue
-    part = String(part).toLocaleLowerCase()
-    if (part.startsWith("on")) {
-      events.push({ name: part.replace("on", ""), handler: args[index] })
-    } else {
-      props.push({ name: part, value: args[index] })
+  if (String(strings).indexOf("=") === -1) {
+    props.push({ name: "content", value: strings.join("").trim() })
+  } else
+    for (let index in strings) {
+      var part = String(strings[index]).replace("=", "").replace(" ", "")
+      if (part.length === 0) continue
+      part = String(part).toLocaleLowerCase()
+      if (part.startsWith("on")) {
+        events.push({ name: part.replace("on", ""), handler: args[index] })
+      } else {
+        props.push({ name: part, value: args[index] })
+      }
     }
-  }
 
   return {
     type: tagName,
@@ -68,26 +75,58 @@ const createElement = (tagName) => (strings, ...args) => {
   }
 }
 
-function addNode(parentEl, component) {
-  const ele = document.createElement(component.type)
-  parentEl.appendChild(ele)
-  for (let prop of component.props) {
-    ele.setAttribute(prop.name, prop.value)
+function addNode(parentEl, component, ele = null) {
+  let id = null
+  const searchId = findPropertyWithValue(component.props, "id")
+
+  if (searchId.length) {
+    id = searchId[0].value
+    ele = document.getElementById(id)
   }
-  ele.textContent = component.props.filter((x) => x.name === "content")[0].value
+
+  if (!ele) {
+    ele = document.createElement(component.type)
+    parentEl.appendChild(ele)
+  }
+
+  let children = null
+  for (let prop of component.props) {
+    if (prop.name !== "children" && prop.value && String(prop.value).trim()?.length)
+      ele.setAttribute(prop.name, prop.value)
+    else if (prop.name === "children") children = prop
+  }
+
+  const contents = findPropertyWithValue(component.props, "content")
+  if (contents.length && String(contents[0].value).trim().length > 0)
+    ele.textContent = contents[0].value
 
   for (let event of component.events) {
     ele.addEventListener(event.name, event.handler)
+  }
+
+  if (children) {
+    for (let child of children.value) {
+      addNode(ele, child)
+    }
+  }
+
+  function findPropertyWithValue(_props, _nameOfProperty) {
+    return (
+      (_props &&
+        _props.push &&
+        _props.filter((x) => x.name === _nameOfProperty)) ??
+      []
+    )
   }
 }
 
 function clickHandler() {
   console.log("clicked")
 }
-var id = "id_btn"
+
 const button = createElement("button")
 
-var buttonParts = button`onClick=${clickHandler} id=${id} content=${"hello world"}`
+var buttonParts = button`onClick=${clickHandler} id=${"id_btn"} content=${"hello world"}`
 
 var parentEl = document.getElementById("rhtml")
 

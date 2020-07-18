@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    
   </head>
   <body>
     <div id="rhtml">
@@ -13,39 +12,102 @@
     <div id="app"></div>
     <div id="app1"></div>
     <div id="timer"></div>
+    <div id="children-example"></div>
+    
     <script src="./reactive-model.js"></script>
     <script>
-      const [value, updater, addSubscriber] = getState(0)
 
-      const [counter, setCounter, addSubscriberForCounter] = getState(50)
+      const butotn = createElement("button")
+      const p = createElement("p")
+      const h1 = createElement("h1")
+      const div = createElement("div")
+      const input = createElement("input")
+      const lineBreak = createElement("br")
+      const label = createElement("label")
+      const form = createElement("form")
+      const pre = createElement("pre")
 
-      addSubscriber((data) => `value: ${data}`, "app")
+      const [value, changeValue, addValueSubscriber] = createReactiveModel(0)
+      const [
+        counter,
+        changeCounter,
+        addCounterSubscriber,
+      ] = createReactiveModel(50)
 
-      addSubscriberForCounter(
-        (data) => `Counter : ${data} <button id='btn'>Counter</button>`,
-        "app1",
-        [
-          {
-            id: "btn",
-            event: "click",
-            method: function () {
-              setCounter(counter.value + 5)
-            },
-          },
-        ]
+      addValueSubscriber((data) => p`content=${"value: " + data}`, "app")
+
+      const counterButton = (data) =>
+        button`id=${"btn-click"} onClick=${() =>
+          changeCounter(counter.value + 5)} content=${data}`
+      addCounterSubscriber(counterButton, "app1")
+
+      changeValue(value.value + 1)
+
+      changeCounter(counter.value + 5)
+
+      const [time, changeTime, addTimeSubscriber] = createReactiveModel(
+        new Date()
+      )
+      addTimeSubscriber(
+        (data) => p`content=${"Timer :" + data.toString()} id=${"timer-text"}`,
+        "timer"
       )
 
-
-      updater(value.value + 1)
-
-      setCounter(counter.value + 5)
-
-      const [timer, setTimer, addSubscriberForTimer] = getState(new Date())
-      addSubscriberForTimer((data) => `Timer : ${data.toString()} `, "timer")
-
       setInterval(() => {
-        setTimer(new Date())
+        changeTime(new Date())
       }, 0)
+
+      const [name, setName, addNameSubscriber] = createReactiveModel("khurram")
+      const [address, setAddress, addAddressSubscriber] = createReactiveModel(
+        "home"
+      )
+      const [
+        entriesJson,
+        setEntriesJson,
+        addEntriesSubscriber,
+      ] = createReactiveModel()
+
+      addNameSubscriber((data) => h1`content=${data}`, "provided-name")
+      addNameSubscriber((data) => h1`content=${data}`, "provided-name")
+      addEntriesSubscriber(
+        (data) => h1`content=${JSON.stringify(data)}`,
+        "provided-entries"
+      )
+
+      const compound = p`content=${"hello world"} children=${[
+        h1`content=${"Complex Element example"}`,
+        div`children=${[
+          h1`content=${"Simple Form"}`,
+          form`children=${[
+            label`for=${"txt-name"} content=${"Name :"}`,
+            input`type=${"text"} id=${"txt-name"} name=${"txt-name"} value=${
+              name.value
+            } onKeyUp=${function (e) {
+              setName(e.target.value)
+            }}`,
+            lineBreak``,
+            label`for=${"address"} content=${"Address :"}`,
+            input`type=${"text"} id=${"address"} name=${"address"} value=${
+              address.value
+            } onKeyUp=${function (e) {
+              setAddress(e.target.value)
+            }}`,
+            lineBreak``,
+            pre`id=${"provided-entries"}`,
+
+            lineBreak``,
+            button`content=${"Submit Form"} onClick=${function (e) {
+              setEntriesJson({ name, address })
+              e.preventDefault()
+            }}`,
+          ]}`,
+        ]}`,
+        lineBreak``,
+        button`content=${"click me"}`,
+      ]}`
+
+      const childrenExample = document.getElementById("children-example")
+      addNode(childrenExample, compound)
     </script>
   </body>
 </html>
